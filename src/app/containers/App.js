@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     const path = pathGet(this, 'this.children.props.route.path', '');
 		const pageParams = pathGet(this, 'props.params', {});
-		const githubUrl = 'https://github.com/skratchdot/wave-editor';
+		const githubUrl = 'https://github.com/skratchdot/audio-editor';
     return (
       <div className={`page-${stringToCssName(path)}`}>
 				<Grid>

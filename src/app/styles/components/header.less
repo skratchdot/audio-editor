@@ -10,11 +10,9 @@
 			text-transform: lowercase;
 		}
 	}
-	nav {
+	ul.nav {
 		float: right;
-		ul {
-			display: inline-block;
-		}
+		display: inline-block;
 	}
 }
 
@@ -22,7 +20,7 @@
 	.header .title {
 		text-align: center;
 	}
-	.header nav {
+	.header ul.nav {
 		float: none;
 		text-align: center;
 	}
@@ -35,7 +33,7 @@
 }
 
 @media (max-width: @screen-xs-max) {
-	.header .nav li {
+	.header ul.nav li {
 		font-size: 10px;
 	}
 }

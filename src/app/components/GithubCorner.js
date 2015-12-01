@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 
 class GithubCorner extends Component {
-  getDefaultProps() {
-    return {
-      href: '/'
-    };
-  }
   render() {
 		return (
       <a href={this.props.href} className="github-corner">
@@ -18,5 +13,9 @@ class GithubCorner extends Component {
 		);
 	}
 }
+
+GithubCorner.defaultProps = {
+  href: '/'
+};
 
 export default GithubCorner;

@@ -1,8 +1,16 @@
 import { combineReducers } from 'redux';
-import counter from './counter';
+import { routerStateReducer } from 'redux-router';
+import audioContext from './audioContext';
+import buffer from './buffer';
+import name from './name';
+import sampleRate from './sampleRate';
 
 const rootReducer = combineReducers({
-  counter
+  router: routerStateReducer,
+  audioContext,
+  buffer,
+  name,
+  sampleRate
 });
 
 export default rootReducer;

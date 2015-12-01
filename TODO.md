@@ -1,0 +1,36 @@
+- Add Unit Tests
+- handle multiple channels
+  - toggle between channels vs mono view
+- handle multiple views
+  - waveform (path vs bar)
+  - waveform dB
+  - spectrogram
+  - spectrogram log(f)
+  - pitch (EAC)
+- Analyze
+  - Beat Detection
+  - BPM
+  - Auto-Slice
+  - https://github.com/hughrawlinson/meyda
+- Export Slices
+- Controls
+  - Volume
+  - Playback Speed
+- Effects
+  - All WebAudio (offline context)
+  - tuna.js
+  - other js libs
+  - custom / user defined functions
+- Storage Options
+  - use IndexedDB
+  - allow upload to 3rd party services (dropbox, etc)
+- Export Options
+  - .wav, .mp3, .ogg, etc
+  - different sample rates, channel counts, bit rates
+- Configuration Options
+  - colors, sizes, etc
+- Atom Editor
+- Documentation
+  - Usage Note
+  - Examples
+  - ESDoc/JSDoc

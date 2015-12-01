@@ -7,7 +7,7 @@ class Home extends Component {
       <div>
         <Jumbotron className="text-center">
           <h1 className="title">
-            wave-editor
+            audio-editor
             <br />
             <small>An audio editor built with React</small>
           </h1>

@@ -5,7 +5,11 @@ import { Provider } from 'react-redux';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import configureStore from './store/configureStore';
 import routes from './routes';
-const store = configureStore();
+const audioContext = new AudioContext();
+const store = configureStore({
+	audioContext: audioContext,
+	sampleRate: audioContext.sampleRate
+});
 
 render(
 	<Provider store={store}>

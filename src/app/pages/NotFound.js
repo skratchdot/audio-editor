@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Jumbotron } from 'react-bootstrap';
 import { Link } from 'react-router';
-const packageInfo = require('../../package.json');
+const packageInfo = require('../../../package.json');
 
 class NotFound extends Component {
   render() {

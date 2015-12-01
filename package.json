@@ -1,18 +1,18 @@
 {
-  "name": "wave-editor",
+  "name": "audio-editor",
   "description": "An audio editor built with React",
   "version": "0.0.1",
-  "homepage": "https://github.com/skratchdot/wave-editor/",
+  "homepage": "https://github.com/skratchdot/audio-editor/",
   "author": {
     "name": "skratchdot",
     "url": "http://skratchdot.com/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/skratchdot/wave-editor.git"
+    "url": "git+https://github.com/skratchdot/audio-editor.git"
   },
   "bugs": {
-    "url": "https://github.com/skratchdot/wave-editor/issues"
+    "url": "https://github.com/skratchdot/audio-editor/issues"
   },
   "engines": {
     "node": ">= 4.x.0"
@@ -20,46 +20,61 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
-    "babel-core": "^6.1.2",
-    "babel-eslint": "^4.1.4",
-    "babel-loader": "^6.0.1",
-    "babel-preset-es2015": "^6.1.2",
-    "babel-preset-react": "^6.1.2",
-    "bootstrap": "^3.3.5",
+    "babel-core": "^6.2.1",
+    "babel-eslint": "^4.1.6",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "bootstrap": "^3.3.6",
     "brfs": "^1.4.1",
     "copy-webpack-plugin": "^0.2.0",
-    "css-loader": "^0.22.0",
-    "eslint": "^1.9.0",
-    "eslint-plugin-react": "^3.8.0",
+    "css-loader": "^0.23.0",
+    "eslint": "^1.10.1",
+    "eslint-plugin-react": "^3.10.0",
     "extract-text-webpack-plugin": "^0.9.1",
-    "file-loader": "^0.8.4",
+    "file-loader": "^0.8.5",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.0",
     "gulp-concat": "^2.6.0",
-    "gulp-eslint": "^1.0.0",
+    "gulp-eslint": "^1.1.1",
     "gulp-rimraf": "^0.2.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
-    "history": "^1.13.0",
-    "json-loader": "^0.5.3",
+    "history": "^1.13.1",
+    "json-loader": "^0.5.4",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
     "marked": "^0.3.5",
-    "object-path-get": "0.0.2",
-    "react": "^0.14.2",
-    "react-bootstrap": "^0.27.3",
-    "react-dom": "^0.14.2",
+    "object-path-get": "0.0.3",
+    "react": "^0.14.3",
+    "react-bootstrap": "^0.28.1",
+    "react-dom": "^0.14.3",
     "react-hot-loader": "^1.3.0",
     "react-redux": "^4.0.0",
-    "react-router": "^1.0.0-rc4",
+    "react-router": "^1.0.0",
     "redux": "^3.0.4",
     "redux-devtools": "^2.1.5",
+    "redux-router": "^1.0.0-beta5",
+    "redux-thunk": "^1.0.0",
     "style-loader": "^0.13.0",
     "transform-loader": "^0.2.3",
-    "url-loader": "^0.5.6",
-    "webpack": "^1.12.3",
-    "webpack-dev-server": "^1.12.1"
-  }
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0"
+  },
+  "keywords": [
+    "audio",
+    "editor",
+    "react",
+    "sound",
+    "wave",
+    "mp3",
+    "aif",
+    "aiff",
+    "ogg",
+    "wav"
+  ]
 }

@@ -16,6 +16,7 @@ module.exports = {
       new webpack.HotModuleReplacementPlugin(),
       new ExtractTextPlugin('css/app.css'),
       new CopyWebpackPlugin([
+        { from: './audio/', to: './audio/' },
         { from: './index.html', to: './index.html' },
         { from: './index.html', to: './404.html' }
       ])
