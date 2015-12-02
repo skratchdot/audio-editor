@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
 class Footer extends Component {
   render() {
@@ -23,4 +24,4 @@ class Footer extends Component {
 	}
 }
 
-export default Footer;
+export default connect()(Footer);

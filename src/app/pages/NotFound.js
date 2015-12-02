@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Jumbotron } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 const packageInfo = require('../../../package.json');
 
@@ -23,4 +24,4 @@ class NotFound extends Component {
   }
 }
 
-export default NotFound;
+export default connect()(NotFound);

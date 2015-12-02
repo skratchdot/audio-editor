@@ -4,13 +4,15 @@ import audioContext from './audioContext';
 import buffer from './buffer';
 import name from './name';
 import sampleRate from './sampleRate';
+import waveformData from './waveformData';
 
 const rootReducer = combineReducers({
   router: routerStateReducer,
   audioContext,
   buffer,
   name,
-  sampleRate
+  sampleRate,
+  waveformData
 });
 
 export default rootReducer;

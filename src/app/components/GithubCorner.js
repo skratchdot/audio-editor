@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class GithubCorner extends Component {
   render() {
@@ -18,4 +19,4 @@ GithubCorner.defaultProps = {
   href: '/'
 };
 
-export default GithubCorner;
+export default connect()(GithubCorner);

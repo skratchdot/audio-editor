@@ -7,6 +7,7 @@ import PlayBar from './PlayBar';
 
 class AudioEditor extends Component {
   render() {
+    const { waveformData } = this.props;
 		return (
       <div>
         <Row>
@@ -17,7 +18,7 @@ class AudioEditor extends Component {
         <Row>
           <Col md={12}>
             <DisplayContainer>
-              <DisplayAmplitudePath />
+              <DisplayAmplitudePath { ...waveformData } />
             </DisplayContainer>
           </Col>
         </Row>
@@ -33,4 +34,8 @@ class AudioEditor extends Component {
 	}
 }
 
-export default connect()(AudioEditor);
+export default connect(function (state) {
+  return {
+    waveformData: state.waveformData
+  };
+})(AudioEditor);

@@ -20,8 +20,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.2.1",
     "babel-eslint": "^4.1.6",
@@ -59,11 +58,13 @@
     "redux-devtools": "^2.1.5",
     "redux-router": "^1.0.0-beta5",
     "redux-thunk": "^1.0.0",
+    "stats-collector": "0.0.6",
     "style-loader": "^0.13.0",
     "transform-loader": "^0.2.3",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.14.0"
+    "webpack-dev-server": "^1.14.0",
+    "worker-loader": "^0.7.0"
   },
   "keywords": [
     "audio",

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Row, Col, Nav } from 'react-bootstrap';
+import { connect } from 'react-redux';
 const packageInfo = require('../../../package.json');
 
 class Header extends Component {
@@ -48,4 +49,4 @@ Header.contextTypes = {
 	history: React.PropTypes.object
 };
 
-export default Header;
+export default connect()(Header);

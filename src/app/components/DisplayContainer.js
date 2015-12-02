@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class DisplayContainer extends Component {
   render() {
@@ -14,4 +15,4 @@ class DisplayContainer extends Component {
 	}
 }
 
-export default DisplayContainer;
+export default connect()(DisplayContainer);

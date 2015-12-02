@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Glyphicon } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
 class PlayBar extends Component {
   render() {
@@ -36,4 +37,4 @@ class PlayBar extends Component {
 	}
 }
 
-export default PlayBar;
+export default connect()(PlayBar);
