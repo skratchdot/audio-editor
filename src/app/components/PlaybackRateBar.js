@@ -9,6 +9,7 @@ class PlaybackRateBar extends Component {
     dispatch(setPlaybackRate(value));
   }
   render() {
+    const { playbackRate } = this.props;
     const self = this;
     const bsStyle = 'primary';
     const bsSize = 'xsmall';
@@ -21,6 +22,7 @@ class PlaybackRateBar extends Component {
               return (
                 <Button
                   key={i}
+                  active={playbackRate === val}
                   bsStyle={bsStyle}
                   bsSize={bsSize}
                   style={{marginRight: padRight}}

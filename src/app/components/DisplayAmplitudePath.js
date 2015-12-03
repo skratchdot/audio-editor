@@ -22,6 +22,7 @@ class DisplayAmplitudePath extends Component {
     };
 		return (
       <svg
+        className="display-amplitude-path"
         style={styles}
         viewBox={`0 -1 ${this.props.size} 2`}
         preserveAspectRatio="none">

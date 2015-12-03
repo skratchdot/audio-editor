@@ -17,6 +17,7 @@ class PlayBar extends Component {
     dispatch(setPlaybackPosition(value, 'PlayBar'));
   }
   render() {
+    const { playbackType } = this.props;
     const self = this;
     const bsStyle = 'success';
     const bsSize = 'xsmall';
@@ -33,6 +34,7 @@ class PlayBar extends Component {
                 <Glyphicon glyph="fast-backward" />
             </Button>
             <Button
+              active={playbackType === -1}
               bsStyle={bsStyle}
               bsSize={bsSize}
               style={{marginRight: padRight}}
@@ -41,6 +43,7 @@ class PlayBar extends Component {
                 Reverse
             </Button>
             <Button
+              active={playbackType === 0}
               bsStyle={bsStyle}
               bsSize={bsSize}
               style={{marginRight: padRight}}
@@ -50,6 +53,7 @@ class PlayBar extends Component {
                 Stop
             </Button>
             <Button
+              active={playbackType === 1}
               bsStyle={bsStyle}
               bsSize={bsSize}
               style={{marginRight: padRight}}

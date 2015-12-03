@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import arrayGet from 'array-any-index';
 import DisplayAmplitudePath from './DisplayAmplitudePath';
 import DisplayContainer from './DisplayContainer';
+import DisplayPlaybackPosition from './DisplayPlaybackPosition';
 import PlayBar from './PlayBar';
 import PlaybackRateBar from './PlaybackRateBar';
 import PlaybackRateSlider from './PlaybackRateSlider';
@@ -120,6 +121,7 @@ class AudioEditor extends Component {
           <Col md={12}>
             <DisplayContainer>
               <DisplayAmplitudePath { ...waveformData.zoom } />
+              <DisplayPlaybackPosition />
             </DisplayContainer>
             <WaveformDataDebugBar { ...waveformData.zoom } />
           </Col>
@@ -128,6 +130,7 @@ class AudioEditor extends Component {
           <Col md={12}>
             <DisplayContainer>
               <DisplayAmplitudePath { ...waveformData.overview } height={50} />
+              <DisplayPlaybackPosition />
             </DisplayContainer>
             <WaveformDataDebugBar { ...waveformData.overview } />
           </Col>

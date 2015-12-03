@@ -52,7 +52,7 @@ class Editor extends Component {
       <div>
         <Row>
           <Col md={4}>
-            <Jumbotron>
+            <Jumbotron style={{padding: 20}}>
               <h4>Audio Editor</h4>
               You can drag-and-drop an audio file onto the window, choose from
               an example file below, or use the open file button to select a
@@ -70,19 +70,30 @@ class Editor extends Component {
                     />
                     <ButtonInput
                       value="Choose Local File"
+                      bsStyle="primary"
+                      style={{width: '100%'}}
                       onClick={this.handleFileButtonClick.bind(this)}
                     />
                   </Col>
                 </Row>
                 <Row>
-                  <Col md={6}>
-                    <Input type="select" placeholder="select">
+                  <Col md={12}>
+                    <label className="control-label">
+                      Select an example file
+                    </label>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={5}>
+                    <Input type="select" placeholder="select" style={{width: '100%'}}>
                       <option value="loop225">loop225</option>
                     </Input>
                   </Col>
-                  <Col md={6}>
+                  <Col md={7}>
                     <ButtonInput
                       value="Load Example"
+                      bsStyle="primary"
+                      style={{width: '100%'}}
                       onClick={() => {
                         dispatch(setBufferFromUrl('/audio-editor/audio/loop225.mp3'));
                       }} />

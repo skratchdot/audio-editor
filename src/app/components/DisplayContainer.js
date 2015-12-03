@@ -3,12 +3,8 @@ import { connect } from 'react-redux';
 
 class DisplayContainer extends Component {
   render() {
-    const styles = {
-      position: 'relative',
-      border: '1px solid black'
-    };
 		return (
-      <div style={styles}>
+      <div className="display-container">
         {this.props.children}
       </div>
 		);
