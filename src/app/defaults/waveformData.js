@@ -1,4 +1,5 @@
-export default function getDefaultData() {
+
+export function getWaveformDataSchema() {
   return {
     size: 1024,
     validFile: false,
@@ -9,5 +10,12 @@ export default function getDefaultData() {
     negMin: [],
     negMax: [],
     negAvg: []
+  };
+}
+
+export default function getDefaultData() {
+  return {
+    zoom: getWaveformDataSchema(),
+    overview: getWaveformDataSchema()
   };
 }

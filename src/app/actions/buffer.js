@@ -3,26 +3,30 @@ import path from 'path';
 import { setName } from './name';
 import { setWaveformData } from './waveformData';
 const WaveformDataWorker = require('worker?inline!../workers/waveformData.js');
-let waveformDataWorker;
+const workers = {};
 
 const decodeAudioData = function (dispatch, getState, name, data, throwError) {
   const { audioContext, waveformData } = getState();
+  const startWorker = function (key, buffer, validFile) {
+    if (workers[key]) {
+      workers[key].terminate();
+      workers[key] = null;
+    }
+    workers[key] = new WaveformDataWorker();
+    workers[key].onmessage = function (e) {
+      e.data.validFile = validFile;
+      dispatch(setWaveformData(key, e.data));
+    };
+    workers[key].postMessage({
+      size: waveformData[key].size,
+      buffer: validFile ? buffer.getChannelData(0) : new Float32Array()
+    });
+  };
   const handleBuffer = function (buffer, validFile) {
     dispatch(setBuffer(buffer));
     dispatch(setName(name));
-    if (waveformDataWorker) {
-      waveformDataWorker.terminate();
-      waveformDataWorker = null;
-    }
-    waveformDataWorker = new WaveformDataWorker();
-    waveformDataWorker.onmessage = function (e) {
-      e.data.validFile = validFile;
-      dispatch(setWaveformData(e.data));
-    };
-    waveformDataWorker.postMessage({
-      size: waveformData.size,
-      buffer: validFile ? buffer.getChannelData(0) : new Float32Array()
-    });
+    startWorker('zoom', buffer, validFile);
+    startWorker('overview', buffer, validFile);
   };
   audioContext.decodeAudioData(data, (buffer) => {
     handleBuffer(buffer, true);

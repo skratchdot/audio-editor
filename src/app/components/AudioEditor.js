@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import arrayGet from 'array-any-index';
-import humanizeDuration from 'humanize-duration';
 import DisplayAmplitudePath from './DisplayAmplitudePath';
 import DisplayContainer from './DisplayContainer';
 import PlayBar from './PlayBar';
 import PlaybackRateBar from './PlaybackRateBar';
 import PlaybackRateSlider from './PlaybackRateSlider';
 import VolumeSlider from './VolumeSlider';
+import WaveformDataDebugBar from './WaveformDataDebugBar';
 import { setPlaybackType } from '../actions/playbackType';
 
 class AudioEditor extends Component {
@@ -96,22 +96,17 @@ class AudioEditor extends Component {
         <Row>
           <Col md={12}>
             <DisplayContainer>
-              <DisplayAmplitudePath { ...waveformData } />
+              <DisplayAmplitudePath { ...waveformData.zoom } />
             </DisplayContainer>
-            <div style={{textAlign: 'right'}}>
-              <small>
-                Render Time:
-                &nbsp;
-                {humanizeDuration(waveformData.renderTime)}
-              </small>
-            </div>
+            <WaveformDataDebugBar { ...waveformData.zoom } />
           </Col>
         </Row>
         <Row>
           <Col md={12}>
             <DisplayContainer>
-              <DisplayAmplitudePath />
+              <DisplayAmplitudePath { ...waveformData.overview } height={50} />
             </DisplayContainer>
+            <WaveformDataDebugBar { ...waveformData.overview } />
           </Col>
         </Row>
       </div>
@@ -123,6 +118,7 @@ export default connect(function (state) {
   return {
     audioContext: state.audioContext,
     buffer: state.buffer,
+    playbackPosition: state.playbackPosition,
     playbackRate: state.playbackRate,
     playbackType: state.playbackType,
     volume: state.volume,

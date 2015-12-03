@@ -1,11 +1,9 @@
 import * as types from '../constants/ActionTypes';
-import getDefaultData from '../defaults/waveformData';
 
-export function setWaveformData(value = getDefaultData()) {
+export function setWaveformData(key, data) {
   const action = {};
-  Object.keys(value).forEach(function (key) {
-    action[key] = value[key];
-  });
+  action.key = key;
+  action.data = JSON.parse(JSON.stringify(data));
   action.type = types.SET_WAVEFORM_DATA;
   return action;
 }

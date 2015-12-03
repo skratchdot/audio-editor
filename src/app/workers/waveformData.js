@@ -1,4 +1,4 @@
-import getDefaultData from '../defaults/waveformData';
+import { getWaveformDataSchema } from '../defaults/waveformData';
 
 self.onmessage = function (e) {
   const forceRenderTime = 100;
@@ -10,7 +10,7 @@ self.onmessage = function (e) {
   const itemsPerBucket = buffer.length / size;
   const emit = function (isFinished) {
     if (isFinished || Date.now() - lastRender > forceRenderTime) {
-      const result = getDefaultData();
+      const result = getWaveformDataSchema();
       for (let i = 0; i < negCollectors.length; i++) {
         const neg = negCollectors[i];
         const pos = posCollectors[i];
@@ -83,4 +83,5 @@ self.onmessage = function (e) {
     emit(false);
   }
   emit(true);
+  self.close();
 };

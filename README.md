@@ -22,5 +22,5 @@ __Coming Soon__
 
 
 ## License
-Copyright (c) 2015 skratchdot
+Copyright (c) 2015 [skratchdot](http://skratchdot.com/)  
 Licensed under the [MIT license](LICENSE-MIT).

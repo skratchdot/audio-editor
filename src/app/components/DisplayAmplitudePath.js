@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import getDefaultData from '../defaults/waveformData';
+import { getWaveformDataSchema } from '../defaults/waveformData';
 
 class DisplayAmplitudePath extends Component {
   render() {
@@ -12,9 +12,11 @@ class DisplayAmplitudePath extends Component {
     const color = 'rgba(0, 0, 200, 0.5)';
     const getPath = function (key) {
       let d = 'M0 0 L0 0';
-      self.props[key].forEach(function (item, i) {
-        d += ` L${i} ${item}`;
-      });
+      if (self.props.hasOwnProperty(key)) {
+        self.props[key].forEach(function (item, i) {
+          d += ` L${i} ${item}`;
+        });
+      }
       d += ` L${self.props.size} 0 Z`;
       return d;
     };
@@ -43,6 +45,6 @@ class DisplayAmplitudePath extends Component {
 DisplayAmplitudePath.defaultProps = Object.assign({
   width: '100%',
   height: 200
-}, getDefaultData());
+}, getWaveformDataSchema());
 
 export default connect()(DisplayAmplitudePath);
