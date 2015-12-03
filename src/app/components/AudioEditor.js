@@ -26,7 +26,7 @@ class AudioEditor extends Component {
     this.audioPosition = playbackPosition.position || 0;
     this.audioSource = audioContext.createBufferSource();
     this.audioSource.loop = true;
-    this.audioProcessor = audioContext.createScriptProcessor(Math.pow(2, 8), 1, 1);
+    this.audioProcessor = audioContext.createScriptProcessor(Math.pow(2, 10), 1, 1);
     this.audioProcessor.onaudioprocess = this.onAudioProcess.bind(this);
     // connect
     this.audioSource.connect(this.audioProcessor);
