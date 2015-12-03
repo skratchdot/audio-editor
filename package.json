@@ -59,7 +59,6 @@
     "redux-devtools": "^2.1.5",
     "redux-router": "^1.0.0-beta5",
     "redux-thunk": "^1.0.0",
-    "stats-collector": "0.0.6",
     "style-loader": "^0.13.0",
     "transform-loader": "^0.2.3",
     "url-loader": "^0.5.7",
