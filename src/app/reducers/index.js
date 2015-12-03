@@ -3,7 +3,8 @@ import { routerStateReducer } from 'redux-router';
 import audioContext from './audioContext';
 import buffer from './buffer';
 import name from './name';
-import sampleRate from './sampleRate';
+import playbackRate from './playbackRate';
+import volume from './volume';
 import waveformData from './waveformData';
 
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
   audioContext,
   buffer,
   name,
-  sampleRate,
+  playbackRate,
+  volume,
   waveformData
 });
 

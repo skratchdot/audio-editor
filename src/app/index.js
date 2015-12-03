@@ -7,8 +7,7 @@ import configureStore from './store/configureStore';
 import routes from './routes';
 const audioContext = new AudioContext();
 const store = configureStore({
-	audioContext: audioContext,
-	sampleRate: audioContext.sampleRate
+	audioContext: audioContext
 });
 
 render(
