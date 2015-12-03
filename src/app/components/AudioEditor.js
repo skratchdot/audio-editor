@@ -6,6 +6,7 @@ import DisplayAmplitudePath from './DisplayAmplitudePath';
 import DisplayContainer from './DisplayContainer';
 import DisplayPlaybackPosition from './DisplayPlaybackPosition';
 import PlayBar from './PlayBar';
+import PlaybackPositionSlider from './PlaybackPositionSlider';
 import PlaybackRateBar from './PlaybackRateBar';
 import PlaybackRateSlider from './PlaybackRateSlider';
 import VolumeSlider from './VolumeSlider';
@@ -98,7 +99,7 @@ class AudioEditor extends Component {
     }
   }
   render() {
-    const { playbackPosition, waveformData } = this.props;
+    const { buffer, playbackPosition, waveformData } = this.props;
 		return (
       <div>
         <Row>
@@ -123,6 +124,7 @@ class AudioEditor extends Component {
               <DisplayAmplitudePath { ...waveformData.zoom } />
               <DisplayPlaybackPosition />
             </DisplayContainer>
+            <PlaybackPositionSlider min={0} max={buffer.length - 1} />
             <WaveformDataDebugBar { ...waveformData.zoom } />
           </Col>
         </Row>
@@ -132,6 +134,7 @@ class AudioEditor extends Component {
               <DisplayAmplitudePath { ...waveformData.overview } height={50} />
               <DisplayPlaybackPosition />
             </DisplayContainer>
+            <PlaybackPositionSlider min={0} max={buffer.length - 1} />
             <WaveformDataDebugBar { ...waveformData.overview } />
           </Col>
         </Row>
