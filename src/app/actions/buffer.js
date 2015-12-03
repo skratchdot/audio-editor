@@ -7,7 +7,7 @@ let waveformDataWorker;
 
 const decodeAudioData = function (dispatch, getState, name, data) {
   const { audioContext, waveformData } = getState();
-  audioContext.decodeAudioData(data).then((buffer) => {
+  audioContext.decodeAudioData(data, (buffer) => {
     dispatch(setBuffer(buffer));
     dispatch(setName(name));
     if (waveformDataWorker) {
@@ -16,14 +16,13 @@ const decodeAudioData = function (dispatch, getState, name, data) {
     }
     waveformDataWorker = new WaveformDataWorker();
     waveformDataWorker.onmessage = function (e) {
-      console.log('from worker', e);
       dispatch(setWaveformData(e.data));
     };
     waveformDataWorker.postMessage({
       size: waveformData.size,
       buffer: buffer.getChannelData(0)
     });
-  }).catch((err) => {
+  }, (err) => {
     throw err;
   });
 };
