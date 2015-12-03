@@ -13,7 +13,7 @@ export default function (state = getDefaultData(), action) {
       if (isInvalid) {
         return state;
       }
-      const newData = JSON.parse(JSON.stringify(state));
+      const newData = {};
       const inputData = action.data;
       newData[action.key] = {};
       Object.keys(getWaveformDataSchema()).forEach(function (key) {
@@ -21,7 +21,7 @@ export default function (state = getDefaultData(), action) {
           newData[action.key][key] = inputData[key];
         }
       });
-      return newData;
+      return Object.assign({}, state, newData);
     default:
       return state;
   }

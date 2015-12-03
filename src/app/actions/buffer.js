@@ -1,6 +1,7 @@
 import * as types from '../constants/ActionTypes';
 import path from 'path';
 import { setName } from './name';
+import { setPlaybackPosition } from './playbackPosition';
 import { setWaveformData } from './waveformData';
 const WaveformDataWorker = require('worker?inline!../workers/waveformData.js');
 const workers = {};
@@ -25,6 +26,7 @@ const decodeAudioData = function (dispatch, getState, name, data, throwError) {
   const handleBuffer = function (buffer, validFile) {
     dispatch(setBuffer(buffer));
     dispatch(setName(name));
+    dispatch(setPlaybackPosition(0, 'actions/buffer'));
     startWorker('zoom', buffer, validFile);
     startWorker('overview', buffer, validFile);
   };

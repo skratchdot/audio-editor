@@ -9,7 +9,10 @@ import PlaybackRateBar from './PlaybackRateBar';
 import PlaybackRateSlider from './PlaybackRateSlider';
 import VolumeSlider from './VolumeSlider';
 import WaveformDataDebugBar from './WaveformDataDebugBar';
+import { setPlaybackPosition } from '../actions/playbackPosition';
 import { setPlaybackType } from '../actions/playbackType';
+import raf from 'raf';
+import * as types from '../constants/ActionTypes';
 
 class AudioEditor extends Component {
   constructor(props) {
@@ -19,15 +22,24 @@ class AudioEditor extends Component {
     this.audioProcessor = null;
   }
   componentDidMount() {
-    const { audioContext } = this.props;
-    this.audioPosition = 0;
+    const { audioContext, playbackPosition } = this.props;
+    this.audioPosition = playbackPosition.position || 0;
     this.audioSource = audioContext.createBufferSource();
     this.audioSource.loop = true;
-    this.audioProcessor = audioContext.createScriptProcessor(4096, 1, 1);
+    this.audioProcessor = audioContext.createScriptProcessor(Math.pow(2, 8), 1, 1);
     this.audioProcessor.onaudioprocess = this.onAudioProcess.bind(this);
     // connect
     this.audioSource.connect(this.audioProcessor);
     this.audioProcessor.connect(audioContext.destination);
+    // requestAnimationFrame
+    raf(this.handleUpdatePlaybackPosition.bind(this));
+  }
+  componentWillReceiveProps(nextProps) {
+    const { playbackPosition } = nextProps;
+    if (playbackPosition.source !== types.SOURCE_ON_AUDIO_PROCESS &&
+      Number.isFinite(playbackPosition.position)) {
+      this.audioPosition = playbackPosition.position;
+    }
   }
   componentWillUnmount() {
     const { dispatch, audioContext } = this.props;
@@ -37,6 +49,17 @@ class AudioEditor extends Component {
     this.audioProcessor = null;
     this.audioSource = null;
     dispatch(setPlaybackType(0));
+  }
+  handleUpdatePlaybackPosition() {
+    const { dispatch, buffer } = this.props;
+    if (buffer.length) {
+      let pos = this.audioPosition % buffer.length;
+      if (pos < 0) {
+        pos = buffer.length + pos;
+      }
+      dispatch(setPlaybackPosition(pos, types.SOURCE_ON_AUDIO_PROCESS));
+    }
+    raf(this.handleUpdatePlaybackPosition.bind(this));
   }
   onAudioProcess(e) {
     const {
@@ -74,7 +97,7 @@ class AudioEditor extends Component {
     }
   }
   render() {
-    const { waveformData } = this.props;
+    const { playbackPosition, waveformData } = this.props;
 		return (
       <div>
         <Row>
@@ -107,6 +130,11 @@ class AudioEditor extends Component {
               <DisplayAmplitudePath { ...waveformData.overview } height={50} />
             </DisplayContainer>
             <WaveformDataDebugBar { ...waveformData.overview } />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            Position: {playbackPosition.position}
           </Col>
         </Row>
       </div>

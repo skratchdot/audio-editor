@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { setPlaybackPosition } from '../actions/playbackPosition';
 import { setPlaybackType } from '../actions/playbackType';
 
 class PlayBar extends Component {
   handlePlaybackTypeChange(value) {
     const { dispatch } = this.props;
     dispatch(setPlaybackType(value));
+  }
+  handlePlaybackPositionChange(value) {
+    const { dispatch, buffer } = this.props;
+    if (!Number.isFinite(value)) {
+      value = (buffer.length || 1) - 1;
+    }
+    dispatch(setPlaybackPosition(value, 'PlayBar'));
   }
   render() {
     const self = this;
@@ -20,7 +28,8 @@ class PlayBar extends Component {
             <Button
               bsStyle={bsStyle}
               bsSize={bsSize}
-              style={{marginRight: padRight}}>
+              style={{marginRight: padRight}}
+              onClick={self.handlePlaybackPositionChange.bind(self, 0)}>
                 <Glyphicon glyph="fast-backward" />
             </Button>
             <Button
@@ -50,7 +59,8 @@ class PlayBar extends Component {
             </Button>
             <Button
               bsStyle={bsStyle}
-              bsSize={bsSize}>
+              bsSize={bsSize}
+              onClick={self.handlePlaybackPositionChange.bind(self)}>
               <Glyphicon glyph="fast-forward" />
             </Button>
           </Col>
@@ -62,6 +72,7 @@ class PlayBar extends Component {
 
 export default connect(function (state) {
   return {
+    buffer: state.buffer,
     playbackType: state.playbackType
   };
 })(PlayBar);
