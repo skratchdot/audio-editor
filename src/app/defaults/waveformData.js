@@ -1,6 +1,7 @@
 export default function getDefaultData() {
   return {
-    size: 256,
+    size: 1024,
+    renderTime: 0,
     posMin: [],
     posMax: [],
     posAvg: [],

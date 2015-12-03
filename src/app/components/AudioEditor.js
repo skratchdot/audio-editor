@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import humanizeDuration from 'humanize-duration';
 import DisplayAmplitudePath from './DisplayAmplitudePath';
 import DisplayContainer from './DisplayContainer';
 import PlayBar from './PlayBar';
@@ -20,6 +21,13 @@ class AudioEditor extends Component {
             <DisplayContainer>
               <DisplayAmplitudePath { ...waveformData } />
             </DisplayContainer>
+            <div style={{textAlign: 'right'}}>
+              <small>
+                Render Time:
+                &nbsp;
+                {humanizeDuration(waveformData.renderTime)}
+              </small>
+            </div>
           </Col>
         </Row>
         <Row>
