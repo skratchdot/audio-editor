@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { Row, Col, ButtonInput, Input, Jumbotron, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import humanizeDuration from 'humanize-duration';
 import { setBufferFromFile, setBufferFromUrl } from '../actions/buffer';
 import AudioEditor from '../components/AudioEditor';
 
@@ -45,8 +46,7 @@ class Editor extends Component {
       dispatch,
       audioContext,
       buffer,
-      name,
-      sampleRate
+      name
     } = this.props;
     return (
       <div>
@@ -97,11 +97,19 @@ class Editor extends Component {
                   </tr>
                   <tr>
                     <th>Sample Rate</th>
-                    <td>{sampleRate}</td>
+                    <td>{buffer.sampleRate}</td>
                   </tr>
                   <tr>
-                    <th>Length (in samples)</th>
+                    <th># of channels</th>
+                    <td>{buffer.numberOfChannels}</td>
+                  </tr>
+                  <tr>
+                    <th># of samples</th>
                     <td>{buffer.length}</td>
+                  </tr>
+                  <tr>
+                    <th>Duration</th>
+                    <td>{humanizeDuration(Math.round(buffer.duration * 1000))}</td>
                   </tr>
                 </tbody>
               </Table>
@@ -122,7 +130,6 @@ export default connect(function (state) {
   return {
     audioContext: state.audioContext,
     buffer: state.buffer,
-    name: state.name,
-    sampleRate: state.sampleRate
+    name: state.name
   };
 })(Editor);

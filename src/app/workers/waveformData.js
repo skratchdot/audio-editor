@@ -11,7 +11,7 @@ self.onmessage = function (e) {
   const emit = function (isFinished) {
     if (isFinished || Date.now() - lastRender > forceRenderTime) {
       const result = getDefaultData();
-      for (let i = 0; i < size; i++) {
+      for (let i = 0; i < negCollectors.length; i++) {
         const neg = negCollectors[i];
         const pos = posCollectors[i];
         result.posMin.push(pos.min || 0);

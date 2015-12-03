@@ -5,9 +5,9 @@ import { setWaveformData } from './waveformData';
 const WaveformDataWorker = require('worker?inline!../workers/waveformData.js');
 let waveformDataWorker;
 
-const decodeAudioData = function (dispatch, getState, name, data) {
+const decodeAudioData = function (dispatch, getState, name, data, throwError) {
   const { audioContext, waveformData } = getState();
-  audioContext.decodeAudioData(data, (buffer) => {
+  const handleBuffer = function (buffer, validFile) {
     dispatch(setBuffer(buffer));
     dispatch(setName(name));
     if (waveformDataWorker) {
@@ -16,14 +16,21 @@ const decodeAudioData = function (dispatch, getState, name, data) {
     }
     waveformDataWorker = new WaveformDataWorker();
     waveformDataWorker.onmessage = function (e) {
+      e.data.validFile = validFile;
       dispatch(setWaveformData(e.data));
     };
     waveformDataWorker.postMessage({
       size: waveformData.size,
-      buffer: buffer.getChannelData(0)
+      buffer: validFile ? buffer.getChannelData(0) : new Float32Array()
     });
+  };
+  audioContext.decodeAudioData(data, (buffer) => {
+    handleBuffer(buffer, true);
   }, (err) => {
-    throw err;
+    handleBuffer([], false);
+    if (throwError) {
+      throw err;
+    }
   });
 };
 
@@ -41,8 +48,9 @@ export function setBufferFromUrl(url = '') {
 		request.open('GET', url, true);
 		request.responseType = 'arraybuffer';
 		request.onload = function () {
-      decodeAudioData(dispatch, getState, name, request.response);
+      decodeAudioData(dispatch, getState, name, request.response, true);
 		};
+    decodeAudioData(dispatch, getState, name, new ArrayBuffer(), false);
 		request.send();
   };
 }
@@ -51,8 +59,9 @@ export function setBufferFromFile(file) {
   return (dispatch, getState) => {
     const reader = new FileReader();
 		reader.onload = function () {
-      decodeAudioData(dispatch, getState, file.name, reader.result);
+      decodeAudioData(dispatch, getState, file.name, reader.result, true);
     };
+    decodeAudioData(dispatch, getState, file.name, new ArrayBuffer(), false);
     reader.readAsArrayBuffer(file);
   };
 }
