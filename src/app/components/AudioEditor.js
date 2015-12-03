@@ -9,7 +9,7 @@ import PlayBar from './PlayBar';
 import PlaybackRateBar from './PlaybackRateBar';
 import PlaybackRateSlider from './PlaybackRateSlider';
 import VolumeSlider from './VolumeSlider';
-const audioProcessBufferSize = 4096;
+import { setPlaybackType } from '../actions/playbackType';
 
 class AudioEditor extends Component {
   constructor(props) {
@@ -23,32 +23,53 @@ class AudioEditor extends Component {
     this.audioPosition = 0;
     this.audioSource = audioContext.createBufferSource();
     this.audioSource.loop = true;
-    this.audioProcessor = audioContext.createScriptProcessor(audioProcessBufferSize);
+    this.audioProcessor = audioContext.createScriptProcessor(4096, 1, 1);
     this.audioProcessor.onaudioprocess = this.onAudioProcess.bind(this);
     // connect
     this.audioSource.connect(this.audioProcessor);
     this.audioProcessor.connect(audioContext.destination);
   }
   componentWillUnmount() {
-    const { audioContext } = this.props;
+    const { dispatch, audioContext } = this.props;
     // disconnect
     this.audioProcessor.disconnect(audioContext.destination);
     this.audioSource.disconnect(this.audioProcessor);
     this.audioProcessor = null;
     this.audioSource = null;
+    dispatch(setPlaybackType(0));
   }
   onAudioProcess(e) {
-    const { buffer, playbackRate, volume } = this.props;
-    for (let i = 0; i < e.outputBuffer.numberOfChannels; i++) {
-      const output = e.outputBuffer.getChannelData(i);
-      let data = [0];
-      if (buffer.length && buffer.numberOfChannels) {
-        // TODO: what happens if buffer.numberOfChannels > output channels?
-        data = buffer.getChannelData(Math.min(i, buffer.numberOfChannels));
+    const {
+      buffer,
+      playbackRate,
+      playbackType,
+      volume
+    } = this.props;
+    const channelData = [];
+    const output = e.outputBuffer.getChannelData(0);
+    if (buffer.length &&
+      typeof buffer.numberOfChannels === 'number' &&
+      playbackType !== 0) {
+      for (let i = 0; i < buffer.numberOfChannels; i++) {
+        channelData[i] = buffer.getChannelData(i);
       }
-      for (let j = 0; j < output.length; j++) {
-        output[j] = arrayGet(data, this.audioPosition) * volume;
+    }
+    for (let i = 0; i < output.length; i++) {
+      output[i] = 0;
+      for (let j = 0; j < channelData.length; j++) {
+        // mix output
+        output[i] += arrayGet(channelData[j], this.audioPosition);
+      }
+      // adjust output
+      if (channelData.length > 1) {
+        output[i] = output[i] / channelData.length;
+      }
+      // add volume
+      output[i] = output[i] * volume;
+      if (playbackType > 0) {
         this.audioPosition = this.audioPosition + playbackRate;
+      } else if (playbackType < 0) {
+        this.audioPosition = this.audioPosition - playbackRate;
       }
     }
   }
@@ -103,6 +124,7 @@ export default connect(function (state) {
     audioContext: state.audioContext,
     buffer: state.buffer,
     playbackRate: state.playbackRate,
+    playbackType: state.playbackType,
     volume: state.volume,
     waveformData: state.waveformData
   };

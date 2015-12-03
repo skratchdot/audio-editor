@@ -4,6 +4,7 @@ import audioContext from './audioContext';
 import buffer from './buffer';
 import name from './name';
 import playbackRate from './playbackRate';
+import playbackType from './playbackType';
 import volume from './volume';
 import waveformData from './waveformData';
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   buffer,
   name,
   playbackRate,
+  playbackType,
   volume,
   waveformData
 });

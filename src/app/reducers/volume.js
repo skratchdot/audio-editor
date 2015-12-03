@@ -1,6 +1,6 @@
 import * as types from '../constants/ActionTypes';
 
-export default function (state = 1, action) {
+export default function (state = 0.5, action) {
   switch (action.type) {
     case types.SET_VOLUME:
       let volume = parseFloat(action.value);
