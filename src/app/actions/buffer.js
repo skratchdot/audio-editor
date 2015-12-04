@@ -3,6 +3,7 @@ import path from 'path';
 import { setName } from './name';
 import { setPlaybackPosition } from './playbackPosition';
 import { setWaveformData } from './waveformData';
+import { zoomShowAll } from './zoom';
 const WaveformDataWorker = require('worker?inline!../workers/waveformData.js');
 const workers = {};
 
@@ -27,6 +28,7 @@ const decodeAudioData = function (dispatch, getState, name, data, throwError) {
     dispatch(setBuffer(buffer));
     dispatch(setName(name));
     dispatch(setPlaybackPosition(0, 'actions/buffer'));
+    dispatch(zoomShowAll());
     startWorker('zoom', buffer, validFile);
     startWorker('overview', buffer, validFile);
   };

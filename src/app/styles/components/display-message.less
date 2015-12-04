@@ -1,0 +1,29 @@
+.display-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  padding: 1% 3%;
+  box-sizing: border-box;
+  .display-message-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    color: white;
+    height: 100%;
+    width: 100%;
+  }
+  /* Fade-In Effect */
+  &.display-message-show {
+    #a.animated;
+    .fadeIn;
+  }
+  /* Fade-Out Effect */
+  &.display-message-hide {
+    #a.animated;
+    .fadeOut;
+  }
+}

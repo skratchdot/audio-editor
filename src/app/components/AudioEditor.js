@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import arrayGet from 'array-any-index';
 import DisplayAmplitudePath from './DisplayAmplitudePath';
 import DisplayContainer from './DisplayContainer';
+import DisplayMessage from './DisplayMessage';
 import DisplayPlaybackPosition from './DisplayPlaybackPosition';
 import PlayBar from './PlayBar';
 import PlaybackPositionSlider from './PlaybackPositionSlider';
@@ -11,6 +12,7 @@ import PlaybackRateBar from './PlaybackRateBar';
 import PlaybackRateSlider from './PlaybackRateSlider';
 import VolumeSlider from './VolumeSlider';
 import WaveformDataDebugBar from './WaveformDataDebugBar';
+import ZoomBar from './ZoomBar';
 import { setPlaybackPosition } from '../actions/playbackPosition';
 import { setPlaybackType } from '../actions/playbackType';
 import raf from 'raf';
@@ -123,9 +125,17 @@ class AudioEditor extends Component {
             <DisplayContainer>
               <DisplayAmplitudePath { ...waveformData.zoom } />
               <DisplayPlaybackPosition />
+              <DisplayMessage { ...waveformData.zoom } />
             </DisplayContainer>
             <PlaybackPositionSlider min={0} max={buffer.length - 1} />
-            <WaveformDataDebugBar { ...waveformData.zoom } />
+            <Row>
+              <Col md={6}>
+                <ZoomBar />
+              </Col>
+              <Col md={6}>
+                <WaveformDataDebugBar { ...waveformData.zoom } />
+              </Col>
+            </Row>
           </Col>
         </Row>
         <Row>
@@ -133,14 +143,17 @@ class AudioEditor extends Component {
             <DisplayContainer>
               <DisplayAmplitudePath { ...waveformData.overview } height={50} />
               <DisplayPlaybackPosition />
+              <DisplayMessage { ...waveformData.overview } />
             </DisplayContainer>
             <PlaybackPositionSlider min={0} max={buffer.length - 1} />
-            <WaveformDataDebugBar { ...waveformData.overview } />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            Position: {playbackPosition.position}
+            <Row>
+              <Col md={6}>
+                <small>Position: {Math.round(playbackPosition.position)}</small>
+              </Col>
+              <Col md={6}>
+                <WaveformDataDebugBar { ...waveformData.overview } />
+              </Col>
+            </Row>
           </Col>
         </Row>
       </div>

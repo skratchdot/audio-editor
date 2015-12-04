@@ -8,6 +8,7 @@ import playbackRate from './playbackRate';
 import playbackType from './playbackType';
 import volume from './volume';
 import waveformData from './waveformData';
+import zoom from './zoom';
 
 const rootReducer = combineReducers({
   router: routerStateReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   playbackRate,
   playbackType,
   volume,
-  waveformData
+  waveformData,
+  zoom
 });
 
 export default rootReducer;
