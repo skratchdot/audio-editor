@@ -10,33 +10,28 @@ export function setExamples(group = '', file = '') {
   };
 }
 
-export function loadExampleFile(exampleFile) {
+export function loadExampleFile(group, file) {
   return (dispatch) => {
     const urlPrefix = 'http://projects.skratchdot.com/audio-files';
-    const url = `${urlPrefix}${exampleFile}`;
+    const url = `${urlPrefix}${file}`;
+    dispatch(setExamples(group, file));
     dispatch(setBufferFromUrl(url));
   };
 }
 
-export function setRandomGroupAndFile(load = true) {
+export function setRandomGroupAndFile() {
   return (dispatch) => {
     const group = getRandomGroup();
     const groupKey = group.key;
     const file = getRandomFile(groupKey)[0];
-    dispatch(setExamples(groupKey, file));
-    if (load) {
-      dispatch(loadExampleFile(file));
-    }
+    dispatch(loadExampleFile(groupKey, file));
   };
 }
 
-export function setRandomFile(load = true) {
+export function setRandomFile() {
   return (dispatch, getState) => {
     const { examples } = getState();
     const file = getRandomFile(examples.group)[0];
-    dispatch(setExamples(examples.group, file));
-    if (load) {
-      dispatch(loadExampleFile(file));
-    }
+    dispatch(loadExampleFile(examples.group, file));
   };
 }

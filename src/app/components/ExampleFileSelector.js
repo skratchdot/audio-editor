@@ -44,20 +44,29 @@ export function getFilesByGroup(groupKey) {
 }
 
 class ExampleFileSelector extends Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(setRandomGroupAndFile(false));
-  }
   loadSelectedExampleFile() {
     const { dispatch } = this.props;
-    const selectedValue = this.refs.fileSelect.getValue();
-    dispatch(loadExampleFile(selectedValue));
+    const selectedGroup = this.refs.selectGroup.getValue();
+    const selectedFile = this.refs.selectFile.getValue();
+    if (selectedGroup && selectedFile) {
+      dispatch(loadExampleFile(selectedGroup, selectedFile));
+    } else {
+      dispatch(setExamples(selectedGroup, selectedFile));
+    }
   }
   render() {
     const { dispatch, examples } = this.props;
     const self = this;
     const groups = getGroups();
     const files = getFilesByGroup(examples.group);
+    let validFileSelected = false;
+    let validGroupSelected = false;
+    if (typeof examples.file === 'string' && examples.file.length) {
+      validFileSelected = true;
+    }
+    if (typeof examples.group === 'string' && examples.group.length) {
+      validGroupSelected = true;
+    }
 		return (
       <div>
         <Row>
@@ -65,10 +74,11 @@ class ExampleFileSelector extends Component {
             <strong>Group:</strong>
           </Col>
           <Col md={10}>
-            <Input type="select" style={{width: '100%'}}
+            <Input ref="selectGroup" type="select" style={{width: '100%'}}
               onChange={(e) => {
                 dispatch(setExamples(e.target.value, null));
               }}>
+              <option value="">Select a group...</option>
               {groups.map(function (g) {
                 return (
                   <option key={g.key} value={g.key}
@@ -85,8 +95,9 @@ class ExampleFileSelector extends Component {
             <strong>File:</strong>
           </Col>
           <Col md={10}>
-            <Input ref="fileSelect" type="select" style={{width: '100%'}}
+            <Input ref="selectFile" type="select" style={{width: '100%'}}
               onChange={self.loadSelectedExampleFile.bind(self)}>
+              <option value="">Select a file...</option>
               {files.map(function (f) {
                 return (
                   <option key={f[0]} value={f[0]}
@@ -104,12 +115,15 @@ class ExampleFileSelector extends Component {
               justifyContent: 'space-between'
             }}>
             <Button bsStyle="primary"
+              disabled={!validFileSelected}
               onClick={self.loadSelectedExampleFile.bind(self)}>
               <Glyphicon glyph="play" />
               &nbsp;
               Load Example
             </Button>
-            <Button bsStyle="primary" onClick={() => {
+            <Button bsStyle="primary"
+              disabled={!validGroupSelected}
+              onClick={() => {
                 dispatch(setRandomFile());
               }}>
               <Glyphicon glyph="random" />
