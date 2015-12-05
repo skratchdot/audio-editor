@@ -1,54 +1,63 @@
 import React, { Component } from 'react';
 import { Row, Col, Input, Button, Glyphicon } from 'react-bootstrap';
-import { setBufferFromUrl } from '../actions/buffer';
+import {
+  loadExampleFile,
+  setExamples,
+  setRandomGroupAndFile,
+  setRandomFile
+} from '../actions/examples';
 import { connect } from 'react-redux';
-import * as examples from '../helpers/exampleFiles';
+import random from 'lodash.random';
+import akwf from '../examples/akwf.json';
+import loops from '../examples/loops.json';
+import virus from '../examples/virus.json';
+import waves from '../examples/waves.json';
+
+const groupData = {
+  akwf: akwf,
+  loops: loops,
+  virus: virus,
+  waves: waves
+};
+
+export function getRandomGroup() {
+  const groups = getGroups();
+  return groups[random(groups.length - 1)];
+}
+
+export function getRandomFile(groupKey) {
+  const files = getFilesByGroup(groupKey);
+  return files[random(files.length - 1)];
+}
+
+export function getGroups() {
+  return [
+    { key: 'akwf', name: 'Adventure Kid Waveforms'},
+    { key: 'loops', name: 'Loops'},
+    { key: 'waves', name: 'Test Wave Files'},
+    { key: 'virus', name: 'Virus Waveforms'}
+  ];
+}
+
+export function getFilesByGroup(groupKey) {
+  return groupData[groupKey] || [];
+}
 
 class ExampleFileSelector extends Component {
-  constructor(props) {
-    super(props);
-    const group = examples.getRandomGroup();
-    const file = examples.getRandomFile(group.key);
-    this.state = {
-      selectedGroup: group.key,
-      selectedFile: file.file
-    };
-  }
-  loadExampleFile(exampleFile) {
+  componentDidMount() {
     const { dispatch } = this.props;
-    const urlPrefix = 'http://projects.skratchdot.com/audio-files';
-    dispatch(setBufferFromUrl(`${urlPrefix}${exampleFile}`));
+    dispatch(setRandomGroupAndFile(false));
   }
   loadSelectedExampleFile() {
+    const { dispatch } = this.props;
     const selectedValue = this.refs.fileSelect.getValue();
-    this.loadExampleFile(selectedValue);
-  }
-  handleRandomGroup() {
-    const group = examples.getRandomGroup();
-    const file = examples.getRandomFile(group.key);
-    this.setState({
-      selectedGroup: group.key,
-      selectedFile: file.file
-    });
-    this.loadExampleFile(file.file);
-  }
-  handleRandomFile() {
-    const file = examples.getRandomFile(this.state.selectedGroup);
-    this.setState({
-      selectedFile: file.file
-    });
-    this.loadExampleFile(file.file);
-  }
-  handleGroupChange(e) {
-    this.setState({
-      selectedGroup: e.target.value,
-      selectedFile: null
-    });
+    dispatch(loadExampleFile(selectedValue));
   }
   render() {
+    const { dispatch, examples } = this.props;
     const self = this;
-    const groups = examples.getGroups();
-    const files = examples.getFilesByGroup(self.state.selectedGroup);
+    const groups = getGroups();
+    const files = getFilesByGroup(examples.group);
 		return (
       <div>
         <Row>
@@ -57,11 +66,13 @@ class ExampleFileSelector extends Component {
           </Col>
           <Col md={10}>
             <Input type="select" style={{width: '100%'}}
-              defaultValue={self.state.selectedGroup}
-              onChange={self.handleGroupChange.bind(self)}>
+              onChange={(e) => {
+                dispatch(setExamples(e.target.value, null));
+              }}>
               {groups.map(function (g) {
                 return (
-                  <option key={g.key} value={g.key}>
+                  <option key={g.key} value={g.key}
+                    selected={g.key === examples.group}>
                     {g.name}
                   </option>
                 );
@@ -75,12 +86,12 @@ class ExampleFileSelector extends Component {
           </Col>
           <Col md={10}>
             <Input ref="fileSelect" type="select" style={{width: '100%'}}
-              defaultValue={self.state.selectedFile}
               onChange={self.loadSelectedExampleFile.bind(self)}>
               {files.map(function (f) {
                 return (
-                  <option key={f.file} value={f.file}>
-                    {f.name}
+                  <option key={f[0]} value={f[0]}
+                    selected={f[0] === examples.file}>
+                    {f[1]}
                   </option>
                 );
               })}
@@ -98,12 +109,16 @@ class ExampleFileSelector extends Component {
               &nbsp;
               Load Example
             </Button>
-            <Button bsStyle="primary" onClick={self.handleRandomFile.bind(self)}>
+            <Button bsStyle="primary" onClick={() => {
+                dispatch(setRandomFile());
+              }}>
               <Glyphicon glyph="random" />
               &nbsp;
               File
             </Button>
-            <Button bsStyle="primary" onClick={self.handleRandomGroup.bind(self)}>
+            <Button bsStyle="primary" onClick={() => {
+                dispatch(setRandomGroupAndFile());
+              }}>
               <Glyphicon glyph="random" />
               &nbsp;
               Group
@@ -117,7 +132,6 @@ class ExampleFileSelector extends Component {
 
 export default connect(function (state) {
   return {
-    buffer: state.buffer,
-    zoom: state.zoom
+    examples: state.examples
   };
 })(ExampleFileSelector);

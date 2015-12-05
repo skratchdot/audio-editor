@@ -1,5 +1,6 @@
 export const SET_AUDIO_CONTEXT = 'SET_AUDIO_CONTEXT';
 export const SET_BUFFER = 'SET_BUFFER';
+export const SET_EXAMPLES = 'SET_EXAMPLES';
 export const SET_NAME = 'SET_NAME';
 export const SET_PLAYBACK_POSITION = 'SET_PLAYBACK_POSITION';
 export const SET_PLAYBACK_RATE = 'SET_PLAYBACK_RATE';
