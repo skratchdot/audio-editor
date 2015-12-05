@@ -5,9 +5,11 @@ self.onmessage = function (e) {
   const startTime = Date.now();
   let lastRender = startTime;
   const { size, buffer } = e.data;
+  let dataSize = Math.min(size, buffer.length || 1);
+  dataSize = Math.max(dataSize, 1);
   const negCollectors = [];
   const posCollectors = [];
-  const itemsPerBucket = buffer.length / size;
+  const itemsPerBucket = buffer.length / dataSize;
   const emit = function (isFinished) {
     if (isFinished || Date.now() - lastRender > forceRenderTime) {
       const result = getWaveformDataSchema();
@@ -31,28 +33,27 @@ self.onmessage = function (e) {
   let collectorIndex = 0;
   let loopIndex = 0;
   let skipIndex = 0;
-  const skipFactor = Math.round(buffer.length / size);
+  const skipFactor = Math.round(buffer.length / dataSize);
+  for (let i = 0; i < dataSize; i++) {
+    negCollectors[i] = {
+      count: 0,
+      sum: 0,
+      min: null,
+      max: null
+    };
+    posCollectors[i] = {
+      count: 0,
+      sum: 0,
+      min: null,
+      max: null
+    };
+  }
   while (bufferIndex < buffer.length) {
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < dataSize; i++) {
       if (bufferIndex < buffer.length) {
-        if (negCollectors.length <= i) {
-          negCollectors[i] = {
-            count: 0,
-            sum: 0,
-            min: null,
-            max: null
-          };
-          posCollectors[i] = {
-            count: 0,
-            sum: 0,
-            min: null,
-            max: null
-          };
-        }
         //skipIndex = bufferIndex;
         skipIndex = (i * skipFactor) + loopIndex;
         collectorIndex = Math.floor(skipIndex / itemsPerBucket);
-
         val = buffer[skipIndex];
         if (val < 0) {
           val = Math.abs(val);
