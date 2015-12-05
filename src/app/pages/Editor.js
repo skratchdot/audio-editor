@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import { Row, Col, ButtonInput, Input, Jumbotron, Table } from 'react-bootstrap';
+import { Row, Col, Button, Glyphicon, Input, Jumbotron, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import humanizeDuration from 'humanize-duration';
-import { setBufferFromFile, setBufferFromUrl } from '../actions/buffer';
+import { setBufferFromFile } from '../actions/buffer';
 import AudioEditor from '../components/AudioEditor';
+import ExampleFileSelector from '../components/ExampleFileSelector';
 
 class Editor extends Component {
   componentDidMount() {
@@ -43,7 +44,6 @@ class Editor extends Component {
   }
   render() {
     const {
-      dispatch,
       audioContext,
       buffer,
       name
@@ -68,37 +68,25 @@ class Editor extends Component {
                       label="Select a file from your computer"
                       onChange={this.handleFileSelect.bind(this)}
                     />
-                    <ButtonInput
-                      value="Choose Local File"
+                    <Button
                       bsStyle="primary"
                       style={{width: '100%'}}
-                      onClick={this.handleFileButtonClick.bind(this)}
-                    />
+                      onClick={this.handleFileButtonClick.bind(this)}>
+                      <Glyphicon glyph="folder-open" />
+                      &nbsp;&nbsp;
+                      Choose Local File
+                    </Button>
                   </Col>
                 </Row>
                 <Row>
                   <Col md={12}>
+                    <div>&nbsp;</div>
                     <label className="control-label">
                       Select an example file
                     </label>
                   </Col>
                 </Row>
-                <Row>
-                  <Col md={5}>
-                    <Input type="select" placeholder="select" style={{width: '100%'}}>
-                      <option value="loop225">loop225</option>
-                    </Input>
-                  </Col>
-                  <Col md={7}>
-                    <ButtonInput
-                      value="Load Example"
-                      bsStyle="primary"
-                      style={{width: '100%'}}
-                      onClick={() => {
-                        dispatch(setBufferFromUrl('/audio-editor/audio/loop225.mp3'));
-                      }} />
-                  </Col>
-                </Row>
+                <ExampleFileSelector />
               </form>
               <Table>
                 <tbody>
