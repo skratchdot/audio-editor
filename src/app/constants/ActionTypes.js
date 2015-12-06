@@ -5,6 +5,7 @@ export const SET_NAME = 'SET_NAME';
 export const SET_PLAYBACK_POSITION = 'SET_PLAYBACK_POSITION';
 export const SET_PLAYBACK_RATE = 'SET_PLAYBACK_RATE';
 export const SET_PLAYBACK_TYPE = 'SET_PLAYBACK_TYPE';
+export const SET_VALID_FILE = 'SET_VALID_FILE';
 export const SET_VOLUME = 'SET_VOLUME';
 export const SET_WAVEFORM_DATA = 'SET_WAVEFORM_DATA';
 export const SET_ZOOM = 'SET_ZOOM';

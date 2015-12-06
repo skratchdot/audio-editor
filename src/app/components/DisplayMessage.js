@@ -6,10 +6,13 @@ class DisplayMessage extends Component {
     const { validFile } = this.props;
     let extraClassInfo = 'display-message-show';
     const messages = [];
-    if (!validFile) {
-      messages.push(<strong key="invalid">No file loaded</strong>);
+    if (!validFile.isValid) {
+      messages.push(<strong key="invalid">No file loaded.</strong>);
+      if (validFile.message && validFile.message.length) {
+        messages.push(<strong key="validFileMessage">&nbsp;&nbsp;{validFile.message}</strong>);
+      }
     }
-    if (validFile) {
+    if (validFile.isValid) {
       extraClassInfo = 'display-message-hide';
     }
     return (
@@ -22,4 +25,8 @@ class DisplayMessage extends Component {
 	}
 }
 
-export default connect()(DisplayMessage);
+export default connect(function (state) {
+  return {
+    validFile: state.validFile
+  };
+})(DisplayMessage);

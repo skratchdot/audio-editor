@@ -3,6 +3,7 @@ import path from 'path';
 import { setName } from './name';
 import { setPlaybackPosition } from './playbackPosition';
 import { setWaveformData } from './waveformData';
+import { setValidFile } from './validFile';
 import { zoomShowAll } from './zoom';
 const WaveformDataWorker = require('worker?inline!../workers/waveformData.js');
 const workers = {};
@@ -39,7 +40,7 @@ export function setBufferFromFile(file) {
   };
 }
 
-export function startWorker(key, validFile) {
+export function startWorker(key) {
   return (dispatch, getState) => {
     const { buffer, waveformData } = getState();
     if (workers[key]) {
@@ -48,12 +49,11 @@ export function startWorker(key, validFile) {
     }
     workers[key] = new WaveformDataWorker();
     workers[key].onmessage = function (e) {
-      e.data.validFile = validFile;
       dispatch(setWaveformData(key, e.data));
     };
     workers[key].postMessage({
       size: waveformData[key].size,
-      buffer: validFile ? buffer.getChannelData(0) : new Float32Array()
+      buffer: buffer && buffer.length ? buffer.getChannelData(0) : new Float32Array()
     });
   };
 }
@@ -61,20 +61,23 @@ export function startWorker(key, validFile) {
 export function decodeAudioData(name, data, throwError) {
   return (dispatch, getState) => {
     const { audioContext } = getState();
-    const handleBuffer = function (buffer, validFile) {
+    const handleBuffer = function (buffer) {
       dispatch(setBuffer(buffer));
       dispatch(setName(name));
       dispatch(setPlaybackPosition(0, 'actions/buffer'));
       dispatch(zoomShowAll());
-      dispatch(startWorker('zoom', validFile));
-      dispatch(startWorker('overview', validFile));
+      dispatch(startWorker('zoom'));
+      dispatch(startWorker('overview'));
     };
     audioContext.decodeAudioData(data, (buffer) => {
-      handleBuffer(buffer, true);
-    }, (err) => {
+      handleBuffer(buffer);
+      dispatch(setValidFile(true, ''));
+    }, function () {
       handleBuffer([], false);
       if (throwError) {
-        throw err;
+        dispatch(setValidFile(false, `Could not decode ${name}.`));
+      } else {
+        dispatch(setValidFile(false, ''));
       }
     });
   };

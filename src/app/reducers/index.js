@@ -9,6 +9,7 @@ import playbackRate from './playbackRate';
 import playbackType from './playbackType';
 import volume from './volume';
 import waveformData from './waveformData';
+import validFile from './validFile';
 import zoom from './zoom';
 
 const rootReducer = combineReducers({
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   playbackPosition,
   playbackRate,
   playbackType,
+  validFile,
   volume,
   waveformData,
   zoom
