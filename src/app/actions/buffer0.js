@@ -15,33 +15,32 @@ export function setBuffer(value = new Float32Array()) {
 }
 
 export function setBufferFromUrl(url = '') {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const request = new XMLHttpRequest();
     const name = path.basename(url);
 		request.open('GET', url, true);
 		request.responseType = 'arraybuffer';
 		request.onload = function () {
-      dispatch(decodeAudioData(name, request.response, true));
+      decodeAudioData(dispatch, getState, name, request.response, true);
 		};
-    dispatch(decodeAudioData(name, new ArrayBuffer(), false));
+    decodeAudioData(dispatch, getState, name, new ArrayBuffer(), false);
 		request.send();
   };
 }
 
 export function setBufferFromFile(file) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const reader = new FileReader();
 		reader.onload = function () {
-      dispatch(decodeAudioData(file.name, reader.result, true));
+      decodeAudioData(dispatch, getState, file.name, reader.result, true);
     };
-    dispatch(decodeAudioData(file.name, new ArrayBuffer(), false));
+    decodeAudioData(dispatch, getState, file.name, new ArrayBuffer(), false);
     reader.readAsArrayBuffer(file);
   };
 }
 
-export function startWorker(key, validFile) {
-  return (dispatch, getState) => {
-    const { buffer, waveformData } = getState();
+export function startWorker(key, buffer, waveformData, validFile) {
+  return (dispatch) => {
     if (workers[key]) {
       workers[key].terminate();
       workers[key] = null;
@@ -58,24 +57,22 @@ export function startWorker(key, validFile) {
   };
 }
 
-export function decodeAudioData(name, data, throwError) {
-  return (dispatch, getState) => {
-    const { audioContext } = getState();
-    const handleBuffer = function (buffer, validFile) {
-      dispatch(setBuffer(buffer));
-      dispatch(setName(name));
-      dispatch(setPlaybackPosition(0, 'actions/buffer'));
-      dispatch(zoomShowAll());
-      dispatch(startWorker('zoom', validFile));
-      dispatch(startWorker('overview', validFile));
-    };
-    audioContext.decodeAudioData(data, (buffer) => {
-      handleBuffer(buffer, true);
-    }, (err) => {
-      handleBuffer([], false);
-      if (throwError) {
-        throw err;
-      }
-    });
+export function decodeAudioData(dispatch, getState, name, data, throwError) {
+  const { audioContext, waveformData } = getState();
+  const handleBuffer = function (buffer, validFile) {
+    dispatch(setBuffer(buffer));
+    dispatch(setName(name));
+    dispatch(setPlaybackPosition(0, 'actions/buffer'));
+    dispatch(zoomShowAll());
+    startWorker('zoom', buffer, waveformData, validFile);
+    startWorker('overview', buffer, waveformData, validFile);
   };
+  audioContext.decodeAudioData(data, (buffer) => {
+    handleBuffer(buffer, true);
+  }, (err) => {
+    handleBuffer([], false);
+    if (throwError) {
+      throw err;
+    }
+  });
 }
