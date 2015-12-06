@@ -52,7 +52,7 @@ class ZoomSlider extends Component {
     style.left = `${left}%`;
     style.width = `${width}%`;
 		return (
-      <div ref="zoomSlider" className="zoom-slider" onMouseDown={this.handleMouseDown.bind(this)}>
+      <div ref="zoomSlider" className={`zoom-slider edit-type-${zoom.editType}`} onMouseDown={this.handleMouseDown.bind(this)}>
         <div ref="zoomThumb" className="zoom-slider-thumb" style={style}>
           <div ref="zoomLeft" className="zoom-slider-item zoom-slider-left"></div>
           <div ref="zoomMiddle" className="zoom-slider-item zoom-slider-middle"></div>
