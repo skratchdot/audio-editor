@@ -63,6 +63,7 @@ export function zoomMoveCenter(ratio) {
     start = Math.min(start, maxStart);
     start = Math.max(0, start);
     const end = start + zoomLength;
+    /*
     console.log('center:',
       'ratio', ratio,
       'bufferLength', bufferLength,
@@ -74,6 +75,7 @@ export function zoomMoveCenter(ratio) {
       'start', start,
       'end', end
     );
+    */
     dispatch(setZoom(start, end));
   };
 }

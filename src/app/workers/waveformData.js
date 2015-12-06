@@ -1,23 +1,24 @@
 import { getWaveformDataSchema } from '../defaults/waveformData';
 
 self.onmessage = function (e) {
+  const startRenderTime = Date.now();
   const forceRenderTime = 100;
-  const startTime = Date.now();
-  let lastRender = startTime;
+  let lastRenderTime = startRenderTime;
   const { size, buffer, start, end } = e.data;
   let newBufferLength = end - start;
-  let dataSize = Math.min(size, newBufferLength);
-  dataSize = Math.max(dataSize, 1);
+  let numBuckets = Math.min(size, newBufferLength);
+  numBuckets = Math.max(numBuckets, 1);
   newBufferLength = Math.max(newBufferLength, 0);
-  const negCollectors = [];
-  const posCollectors = [];
-  const itemsPerBucket = newBufferLength / dataSize;
+  const buckets = [];
+  const itemsPerBucket = newBufferLength / numBuckets;
+  let mainLoopIndex = start;
+  const mainLoopEnd = start + newBufferLength;
   const emit = function (isFinished) {
-    if (isFinished || Date.now() - lastRender > forceRenderTime) {
+    if (isFinished || Date.now() - lastRenderTime > forceRenderTime) {
       const result = getWaveformDataSchema();
-      for (let i = 0; i < negCollectors.length; i++) {
-        const neg = negCollectors[i];
-        const pos = posCollectors[i];
+      for (let i = 0; i < buckets.length; i++) {
+        const neg = buckets[i].neg;
+        const pos = buckets[i].pos;
         result.posMin.push(pos.min || 0);
         result.posAvg.push(pos.sum / (pos.count || 1));
         result.posMax.push(pos.max || 0);
@@ -25,73 +26,80 @@ self.onmessage = function (e) {
         result.negAvg.push(0 - (neg.sum / (neg.count || 1)));
         result.negMax.push((0 - neg.max) || 0);
       }
-      result.renderTime = Date.now() - startTime;
+      result.renderTime = Date.now() - startRenderTime;
       self.postMessage(result);
-      lastRender = Date.now();
+      lastRenderTime = Date.now();
+    }
+    if (isFinished) {
+      self.close();
     }
   };
-  let val;
-  let bufferIndex = start;
-  let loopIndex = 0;
-  let skipIndex = 0;
-  let collectorIndex = 0;
-  const skipFactor = Math.ceil(newBufferLength / dataSize);
-  for (let i = 0; i < dataSize; i++) {
-    negCollectors[i] = {
-      count: 0,
-      sum: 0,
-      min: null,
-      max: null
+  const initBucket = function (loopStart, loopEnd) {
+    return {
+      neg: {
+        count: 0,
+        sum: 0,
+        min: null,
+        max: null
+      },
+      pos: {
+        count: 0,
+        sum: 0,
+        min: null,
+        max: null
+      },
+      loopStart: loopStart,
+      loopEnd: loopEnd
     };
-    posCollectors[i] = {
-      count: 0,
-      sum: 0,
-      min: null,
-      max: null
-    };
-  }
-  try {
-    while (bufferIndex < newBufferLength) {
-      for (let i = 0; i < dataSize; i++) {
-        if (bufferIndex < newBufferLength) {
-          //skipIndex = bufferIndex;
-          skipIndex = (i * skipFactor) + loopIndex;
-          collectorIndex = Math.floor(skipIndex / itemsPerBucket) % dataSize;
-          val = buffer[skipIndex];
-          if (val < 0) {
-            val = Math.abs(val);
-            negCollectors[collectorIndex].count++;
-            negCollectors[collectorIndex].sum += val;
-            if (val < negCollectors[collectorIndex].min) {
-              negCollectors[collectorIndex].min = val;
-            }
-            if (val > negCollectors[collectorIndex].max) {
-              negCollectors[collectorIndex].max = val;
-            }
-          } else if (val > 0) {
-            posCollectors[collectorIndex].count++;
-            posCollectors[collectorIndex].sum += val;
-            if (val < posCollectors[collectorIndex].min) {
-              posCollectors[collectorIndex].min = val;
-            }
-            if (val > posCollectors[collectorIndex].max) {
-              posCollectors[collectorIndex].max = val;
-            }
-          }
-          bufferIndex++;
-        } else {
-          break;
-        }
-      }
-      loopIndex++;
-      emit(false);
+  };
+  const updateBucket = function (obj, key, val) {
+    obj[key].count++;
+    obj[key].sum += val;
+    if (val < obj[key].min) {
+      obj[key].min = val;
     }
-  } catch (e) {
-    /*eslint-disable */
-    console.log(e, collectorIndex);
-    /*eslint-enable */
-    throw e;
+    if (val > obj[key].max) {
+      obj[key].max = val;
+    }
+    return obj;
+  };
+  // create buckets
+  let loopStart = mainLoopIndex;
+  for (let i = 0; i < numBuckets; i++) {
+    const loopEnd = loopStart + itemsPerBucket;
+    buckets[i] = initBucket(Math.round(loopStart), loopEnd);
+    loopStart += itemsPerBucket;
   }
+  const logit = function (logMessage) {
+    console.log(
+      logMessage, ':',
+      'startRenderTime', startRenderTime,
+      'buckets', buckets,
+      'mainLoopIndex', mainLoopIndex,
+      'newBufferLength', newBufferLength,
+      'numBuckets', numBuckets,
+      'itemsPerBucket', itemsPerBucket
+    );
+  };
+  logit('start');
+  while (mainLoopIndex < mainLoopEnd) {
+    for (let i = 0; i < numBuckets; i++) {
+      let val = buffer[buckets[i].loopStart];
+      if (val < 0) {
+        val = Math.abs(val);
+        buckets[i] = updateBucket(buckets[i], 'neg', val);
+      } else if (val > 0) {
+        buckets[i] = updateBucket(buckets[i], 'pos', val);
+      }
+      buckets[i].loopStart++;
+      mainLoopIndex++;
+    }
+    emit(false);
+  }
+  logit('done');
   emit(true);
-  self.close();
+};
+
+self.onerror = function (err) {
+  console.log('worker error: waveformData', err);
 };

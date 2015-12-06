@@ -17,7 +17,6 @@ class ZoomBar extends Component {
     } else if (type === 'end') {
       dispatch(zoomFunctions.setZoom(zoom.start, e.target.value));
     }
-    console.log(e.target.value);
   }
   render() {
     const { buffer, zoom } = this.props;
