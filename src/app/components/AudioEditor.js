@@ -102,7 +102,7 @@ class AudioEditor extends Component {
     }
   }
   render() {
-    const { buffer, playbackPosition, waveformData } = this.props;
+    const { buffer, playbackPosition, waveformData, zoom } = this.props;
 		return (
       <div>
         <Row>
@@ -125,10 +125,10 @@ class AudioEditor extends Component {
           <Col md={12}>
             <DisplayContainer>
               <DisplayAmplitudePath { ...waveformData.zoom } />
-              <DisplayPlaybackPosition />
+              <DisplayPlaybackPosition min={zoom.start} max={zoom.end} />
               <DisplayMessage { ...waveformData.zoom } />
             </DisplayContainer>
-            <PlaybackPositionSlider min={0} max={buffer.length - 1} />
+            <PlaybackPositionSlider min={zoom.start} max={zoom.end} />
             <Row>
               <Col md={6}>
                 <ZoomBar />
@@ -143,7 +143,7 @@ class AudioEditor extends Component {
           <Col md={12}>
             <DisplayContainer>
               <DisplayAmplitudePath { ...waveformData.overview } height={50} />
-              <DisplayPlaybackPosition />
+              <DisplayPlaybackPosition min={0} max={buffer.length - 1} />
               <ZoomSlider />
               <DisplayMessage { ...waveformData.overview } />
             </DisplayContainer>
@@ -171,6 +171,7 @@ export default connect(function (state) {
     playbackRate: state.playbackRate,
     playbackType: state.playbackType,
     volume: state.volume,
-    waveformData: state.waveformData
+    waveformData: state.waveformData,
+    zoom: state.zoom
   };
 })(AudioEditor);
