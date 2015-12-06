@@ -42,7 +42,7 @@ export function setBufferFromFile(file) {
 
 export function startWorker(key) {
   return (dispatch, getState) => {
-    const { buffer, waveformData } = getState();
+    const { buffer, waveformData, zoom } = getState();
     if (workers[key]) {
       workers[key].terminate();
       workers[key] = null;
@@ -51,29 +51,42 @@ export function startWorker(key) {
     workers[key].onmessage = function (e) {
       dispatch(setWaveformData(key, e.data));
     };
-    workers[key].postMessage({
-      size: waveformData[key].size,
-      buffer: buffer && buffer.length ? buffer.getChannelData(0) : new Float32Array()
-    });
+    const postData = {};
+    postData.size = waveformData[key].size;
+    if (buffer && buffer.length) {
+      postData.buffer = buffer.getChannelData(0);
+    } else {
+      postData.buffer = new Float32Array();
+    }
+    if (key === 'zoom') {
+      postData.start = zoom.start;
+      postData.end = zoom.end;
+    } else {
+      postData.start = 0;
+      postData.end = postData.buffer.length;
+    }
+    workers[key].postMessage(postData);
+  };
+}
+
+export function handleBuffer(buffer, name) {
+  return (dispatch) => {
+    dispatch(setBuffer(buffer));
+    dispatch(setName(name));
+    dispatch(setPlaybackPosition(0, 'actions/buffer'));
+    dispatch(zoomShowAll());
+    dispatch(startWorker('overview'));
   };
 }
 
 export function decodeAudioData(name, data, throwError) {
   return (dispatch, getState) => {
     const { audioContext } = getState();
-    const handleBuffer = function (buffer) {
-      dispatch(setBuffer(buffer));
-      dispatch(setName(name));
-      dispatch(setPlaybackPosition(0, 'actions/buffer'));
-      dispatch(zoomShowAll());
-      dispatch(startWorker('zoom'));
-      dispatch(startWorker('overview'));
-    };
     audioContext.decodeAudioData(data, (buffer) => {
-      handleBuffer(buffer);
+      dispatch(handleBuffer(buffer));
       dispatch(setValidFile(true, ''));
     }, function () {
-      handleBuffer([], false);
+      dispatch(handleBuffer([], false));
       if (throwError) {
         dispatch(setValidFile(false, `Could not decode ${name}.`));
       } else {

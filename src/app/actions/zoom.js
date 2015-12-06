@@ -1,11 +1,14 @@
 import * as types from '../constants/ActionTypes';
-//import { startWorker } from './buffer';
+import { startWorker } from './buffer';
 
 export function setZoom(start, end) {
-  return {
-    type: types.SET_ZOOM,
-    start: start,
-    end: end
+  return (dispatch) => {
+    dispatch({
+      type: types.SET_ZOOM,
+      start: start,
+      end: end
+    });
+    dispatch(startWorker('zoom'));
   };
 }
 
@@ -33,6 +36,5 @@ export function zoomShowAll() {
   return (dispatch, getState) => {
     const { buffer } = getState();
     dispatch(setZoom(0, buffer.length || 0));
-    //dispatch(startWorker('zoom'));
   };
 }
