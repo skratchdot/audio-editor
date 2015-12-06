@@ -13,6 +13,7 @@ import PlaybackRateSlider from './PlaybackRateSlider';
 import VolumeSlider from './VolumeSlider';
 import WaveformDataDebugBar from './WaveformDataDebugBar';
 import ZoomBar from './ZoomBar';
+import ZoomSlider from './ZoomSlider';
 import { setPlaybackPosition } from '../actions/playbackPosition';
 import { setPlaybackType } from '../actions/playbackType';
 import raf from 'raf';
@@ -143,6 +144,7 @@ class AudioEditor extends Component {
             <DisplayContainer>
               <DisplayAmplitudePath { ...waveformData.overview } height={50} />
               <DisplayPlaybackPosition />
+              <ZoomSlider />
               <DisplayMessage { ...waveformData.overview } />
             </DisplayContainer>
             <PlaybackPositionSlider min={0} max={buffer.length - 1} />

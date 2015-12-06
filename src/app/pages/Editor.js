@@ -58,36 +58,35 @@ class Editor extends Component {
               an example file below, or use the open file button to select a
               file to open from your computer.
               <hr />
-              <form>
-                <Row>
-                  <Col md={12}>
-                    <Input
-                      ref="fileButtonContainer"
-                      type="file"
-                      wrapperClassName="btn-file"
-                      label="Select a file from your computer"
-                      onChange={this.handleFileSelect.bind(this)}
-                    />
-                    <Button
-                      bsStyle="primary"
-                      style={{width: '100%'}}
-                      onClick={this.handleFileButtonClick.bind(this)}>
-                      <Glyphicon glyph="folder-open" />
-                      &nbsp;&nbsp;
-                      Choose Local File
-                    </Button>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md={12}>
-                    <div>&nbsp;</div>
-                    <label className="control-label">
-                      Select an example file
-                    </label>
-                  </Col>
-                </Row>
-                <ExampleFileSelector />
-              </form>
+              <Row>
+                <Col md={12}>
+                  <Input
+                    ref="fileButtonContainer"
+                    type="file"
+                    wrapperClassName="btn-file"
+                    label="Select a file from your computer"
+                    onChange={this.handleFileSelect.bind(this)}
+                  />
+                  <Button
+                    bsStyle="primary"
+                    style={{width: '100%'}}
+                    onClick={this.handleFileButtonClick.bind(this)}>
+                    <Glyphicon glyph="folder-open" />
+                    &nbsp;&nbsp;
+                    Choose Local File
+                  </Button>
+                </Col>
+              </Row>
+              <hr />
+              <Row>
+                <Col md={12}>
+                  <label className="control-label">
+                    Select an example file
+                  </label>
+                </Col>
+              </Row>
+              <ExampleFileSelector />
+              <div>&nbsp;</div>
               <Table>
                 <tbody>
                   <tr>
