@@ -10,6 +10,15 @@ class ZoomBar extends Component {
       dispatch(zoomFunctions[fnName]());
     }
   }
+  handleSlide(type, e) {
+    const { dispatch, zoom } = this.props;
+    if (type === 'start') {
+      dispatch(zoomFunctions.setZoom(e.target.value, zoom.end));
+    } else if (type === 'end') {
+      dispatch(zoomFunctions.setZoom(zoom.start, e.target.value));
+    }
+    console.log(e.target.value);
+  }
   render() {
     const { buffer, zoom } = this.props;
     const self = this;
@@ -52,6 +61,34 @@ class ZoomBar extends Component {
         </Button>
         &nbsp;
         <small>1 : {ratio}</small>
+        <div>&nbsp;</div>
+        <div>
+          Zoom Length: {zoom.length}
+        </div>
+        <div>
+          Start: {zoom.start}
+          <input
+            type="range"
+            step="1"
+            min="0"
+            max={buffer.length}
+            value={zoom.start}
+            onChange={this.handleSlide.bind(this, 'start')}
+            onInput={this.handleSlide.bind(this, 'start')}
+          />
+        </div>
+        <div>
+          End: {zoom.end}
+          <input
+            type="range"
+            step="1"
+            min="0"
+            max={buffer.length}
+            value={zoom.end}
+            onChange={this.handleSlide.bind(this, 'end')}
+            onInput={this.handleSlide.bind(this, 'end')}
+          />
+        </div>
       </div>
 		);
 	}

@@ -9,4 +9,5 @@ export const SET_VALID_FILE = 'SET_VALID_FILE';
 export const SET_VOLUME = 'SET_VOLUME';
 export const SET_WAVEFORM_DATA = 'SET_WAVEFORM_DATA';
 export const SET_ZOOM = 'SET_ZOOM';
+export const SET_ZOOM_EDIT = 'SET_ZOOM_EDIT';
 export const SOURCE_ON_AUDIO_PROCESS = 'SOURCE_ON_AUDIO_PROCESS';
