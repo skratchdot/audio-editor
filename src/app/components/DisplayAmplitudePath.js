@@ -24,14 +24,14 @@ class DisplayAmplitudePath extends Component {
           d += ` L${i} ${0 - item}`;
         });
       }
-      d += ` L${size} 0 Z`;
+      d += ` L${size - 1} 0 Z`;
       return d;
     };
 		return (
       <svg
         className="display-amplitude-path"
         style={styles}
-        viewBox={`0 -1 ${size} 2`}
+        viewBox={`0 -1 ${size - 1} 2`}
         preserveAspectRatio="none">
         <g>
           <line x1={0} y1={0} x2={size} y2={0}
