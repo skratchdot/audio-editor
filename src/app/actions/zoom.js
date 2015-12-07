@@ -5,7 +5,11 @@ export function setZoom(start, end) {
   return (dispatch) => {
     start = parseFloat(start);
     end = parseFloat(end);
-    end = Math.max(start + 1, end);
+    if (end < start) {
+      [start, end] = [end, start];
+    }
+    start = Math.max(0, start);
+    end = Math.max(start, end);
     const length = end - start;
     dispatch({
       type: types.SET_ZOOM,

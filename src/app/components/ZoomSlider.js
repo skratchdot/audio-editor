@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setZoomEdit, zoomMoveCenter } from '../actions/zoom';
+import { setZoom, setZoomEdit, zoomMoveCenter } from '../actions/zoom';
 
 class ZoomSlider extends Component {
   componentDidMount() {
@@ -13,14 +13,18 @@ class ZoomSlider extends Component {
     window.removeEventListener('mouseup', this.boundMouseUp);
     window.removeEventListener('mousemove', this.boundMouseMove);
   }
-  handleCenter(e) {
-    const { dispatch } = this.props;
+  getPosition(e) {
     const zoomWindow = this.refs.zoomSlider.getBoundingClientRect();
     const root = document.documentElement;
     const mouseX = e.clientX - zoomWindow.left - root.scrollLeft;
     let ratio = mouseX / zoomWindow.width;
     ratio = Math.min(1, ratio);
     ratio = Math.max(0, ratio);
+    return ratio;
+  }
+  handleCenter(e) {
+    const { dispatch } = this.props;
+    const ratio = this.getPosition.call(this, e);
     dispatch(zoomMoveCenter(ratio));
   }
   handleMouseDown(e) {
@@ -28,6 +32,10 @@ class ZoomSlider extends Component {
     if (e.target === this.refs.zoomMiddle || e.target === this.refs.zoomSlider) {
       dispatch(setZoomEdit(true, 'move'));
       this.boundCenter(e);
+    } else if (e.target === this.refs.zoomLeft) {
+      dispatch(setZoomEdit(true, 'changeLeft'));
+    } else if (e.target === this.refs.zoomRight) {
+      dispatch(setZoomEdit(true, 'changeRight'));
     }
     window.addEventListener('mousemove', this.boundMouseMove);
   }
@@ -37,9 +45,19 @@ class ZoomSlider extends Component {
     dispatch(setZoomEdit(false));
   }
   handleMouseMove(e) {
-    const { dispatch, zoom } = this.props;
-    if (zoom.isEditing && zoom.editType === 'move') {
-      this.boundCenter(e);
+    const { dispatch, buffer, zoom } = this.props;
+    if (zoom.isEditing) {
+      if (zoom.editType === 'move') {
+        this.boundCenter(e);
+      } else {
+        const ratio = this.getPosition.call(this, e);
+        const newValue = buffer.length * ratio;
+        if (zoom.editType === 'changeLeft') {
+          dispatch(setZoom(newValue, zoom.end));
+        } else if (zoom.editType === 'changeRight') {
+          dispatch(setZoom(zoom.start, newValue));
+        }
+      }
     }
   }
   render() {
