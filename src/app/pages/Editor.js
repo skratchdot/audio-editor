@@ -87,7 +87,7 @@ class Editor extends Component {
               </Row>
               <ExampleFileSelector />
               <div>&nbsp;</div>
-              <Table>
+              <Table striped bordered condensed hover>
                 <tbody>
                   <tr>
                     <th>Name</th>

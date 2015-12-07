@@ -83,10 +83,10 @@ export function decodeAudioData(name, data, throwError) {
   return (dispatch, getState) => {
     const { audioContext } = getState();
     audioContext.decodeAudioData(data, (buffer) => {
-      dispatch(handleBuffer(buffer));
+      dispatch(handleBuffer(buffer, name));
       dispatch(setValidFile(true, ''));
     }, function () {
-      dispatch(handleBuffer([], false));
+      dispatch(handleBuffer([], name));
       if (throwError) {
         dispatch(setValidFile(false, `Could not decode ${name}.`));
       } else {
