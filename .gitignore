@@ -27,5 +27,8 @@ iisnode/
 # CTags
 tags
 
+# Code Coverage
+coverage/
+
 # ignores specific to this repo
 build/dev

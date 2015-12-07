@@ -2,6 +2,9 @@
 const eslint = require('gulp-eslint');
 const gulp = require('gulp');
 const gutil = require('gulp-util');
+const isparta = require('isparta');
+const istanbul = require('gulp-istanbul');
+const mocha = require('gulp-mocha');
 const rimraf = require('gulp-rimraf');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -13,7 +16,9 @@ const devDir = `${__dirname}/build/dev/${packageInfo.name}`;
 const prodDir = `${__dirname}/build/prod`;
 const files = {
 	clean: [`${devDir}/*`, `${prodDir}/*`],
-	lint: ['./src/**/*.js', './gulpfile.js', './webpack.config.js']
+	cover: ['./src/**/*.js', '!./src/cli/cli.js'],
+	lint: ['./src/**/*.js', './gulpfile.js', './webpack.config.js'],
+	test: ['./test/**/*.js']
 };
 
 gulp.task('clean', function () {
@@ -34,6 +39,31 @@ gulp.task('lint', function () {
 		// To have the process exit with an error code (1) on
 		// lint error, return the stream and pipe to failAfterError last.
 		.pipe(eslint.failAfterError());
+});
+
+gulp.task('test', function () {
+  return gulp.src(files.cover)
+    .pipe(istanbul({
+      instrumenter: isparta.Instrumenter,
+      includeUntested: true
+    }))
+    // Force `require` to return covered files
+    .pipe(istanbul.hookRequire())
+    .on('finish', function () {
+      return gulp.src(files.test, {read: false})
+        // gulp-mocha needs filepaths so you can't have any plugins before it
+        .pipe(mocha({
+          reporter: 'spec'
+        }))
+        .on('error', function (err) {
+          console.error(err.toString());
+          this.emit('end');
+        })
+        .pipe(istanbul.writeReports({
+          dir: './coverage',
+          reporters: ['lcov', 'json', 'text-summary']
+        }));
+    });
 });
 
 gulp.task('build:prod', function (callback) {
