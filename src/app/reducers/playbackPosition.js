@@ -1,6 +1,9 @@
 import * as types from '../constants/ActionTypes';
 
-export default function (state = { position: 0, source: null }, action) {
+export default function (state = {
+  position: 0,
+  source: null
+}, action) {
   switch (action.type) {
     case types.SET_PLAYBACK_POSITION:
       let position = parseFloat(action.position);

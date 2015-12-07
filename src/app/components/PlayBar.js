@@ -14,7 +14,7 @@ class PlayBar extends Component {
     if (!Number.isFinite(value)) {
       value = (buffer.length || 1) - 1;
     }
-    dispatch(setPlaybackPosition(value, 'PlayBar'));
+    dispatch(setPlaybackPosition(value, false, 'PlayBar'));
   }
   render() {
     const { playbackType } = this.props;

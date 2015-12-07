@@ -6,6 +6,7 @@ import examples from './examples';
 import name from './name';
 import playbackPosition from './playbackPosition';
 import playbackRate from './playbackRate';
+import playbackScrubbing from './playbackScrubbing';
 import playbackType from './playbackType';
 import volume from './volume';
 import waveformData from './waveformData';
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   name,
   playbackPosition,
   playbackRate,
+  playbackScrubbing,
   playbackType,
   validFile,
   volume,

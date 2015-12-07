@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import arrayGet from 'array-any-index';
+import ease from 'd3-ease';
 import DisplayAmplitudePath from './DisplayAmplitudePath';
 import DisplayContainer from './DisplayContainer';
 import DisplayMessage from './DisplayMessage';
@@ -55,13 +56,18 @@ class AudioEditor extends Component {
     this.audioSource = null;
     dispatch(setPlaybackType(0));
   }
+  getNormalizedPosition() {
+    const { buffer } = this.props;
+    let pos = (this.audioPosition % buffer.length) || 0;
+    if (pos < 0) {
+      pos = buffer.length + pos;
+    }
+    return pos;
+  }
   handleUpdatePlaybackPosition() {
-    const { dispatch, buffer } = this.props;
-    if (buffer.length) {
-      let pos = this.audioPosition % buffer.length;
-      if (pos < 0) {
-        pos = buffer.length + pos;
-      }
+    const { dispatch, buffer, playbackScrubbing } = this.props;
+    if (buffer.length && !playbackScrubbing) {
+      const pos = this.getNormalizedPosition.call(this);
       dispatch(setPlaybackPosition(pos, types.SOURCE_ON_AUDIO_PROCESS));
     }
     raf(this.handleUpdatePlaybackPosition.bind(this));
@@ -69,10 +75,16 @@ class AudioEditor extends Component {
   onAudioProcess(e) {
     const {
       buffer,
+      playbackPosition,
       playbackRate,
+      playbackScrubbing,
       playbackType,
       volume
     } = this.props;
+    let positionDelta = 0;
+    let scrubStart = this.lastScrub;
+    let scrubEnd = this.lastScrub;
+    let scrubLength = scrubEnd - scrubStart;
     const channelData = [];
     const output = e.outputBuffer.getChannelData(0);
     if (buffer.length &&
@@ -82,6 +94,23 @@ class AudioEditor extends Component {
         channelData[i] = buffer.getChannelData(i);
       }
     }
+    if (playbackScrubbing) {
+      if (this.lastScrub !== playbackPosition.position) {
+        if (Number.isFinite(this.lastScrub)) {
+          scrubStart = this.lastScrub;
+        } else {
+          scrubStart = this.getNormalizedPosition.call(this);
+        }
+        scrubEnd = playbackPosition.position;
+        scrubLength = scrubEnd - scrubStart;
+        this.lastScrub = playbackPosition.position;
+      }
+    } else if (playbackType > 0) {
+      positionDelta = playbackRate;
+    } else if (playbackType < 0) {
+      positionDelta = 0 - playbackRate;
+    }
+    const maxLength = output.length - 1;
     for (let i = 0; i < output.length; i++) {
       output[i] = 0;
       for (let j = 0; j < channelData.length; j++) {
@@ -94,10 +123,11 @@ class AudioEditor extends Component {
       }
       // add volume
       output[i] = output[i] * volume;
-      if (playbackType > 0) {
-        this.audioPosition = this.audioPosition + playbackRate;
-      } else if (playbackType < 0) {
-        this.audioPosition = this.audioPosition - playbackRate;
+      if (playbackScrubbing) {
+        const easePosition = ease.linear(i / maxLength);
+        this.audioPosition = (scrubStart + (easePosition * scrubLength));
+      } else {
+        this.audioPosition += positionDelta;
       }
     }
   }
@@ -169,6 +199,7 @@ export default connect(function (state) {
     buffer: state.buffer,
     playbackPosition: state.playbackPosition,
     playbackRate: state.playbackRate,
+    playbackScrubbing: state.playbackScrubbing,
     playbackType: state.playbackType,
     volume: state.volume,
     waveformData: state.waveformData,
