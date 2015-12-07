@@ -6,7 +6,8 @@ function getDefaultData() {
     end: 0,
     length: 0,
     isEditing: false,
-    editType: ''
+    editType: '',
+    zoomPanelExpanded: false
   };
 }
 
@@ -22,6 +23,10 @@ export default function (state = getDefaultData(), action) {
       return Object.assign({}, state, {
         isEditing: action.isEditing,
         editType: action.editType
+      });
+    case types.SET_ZOOM_PANEL_EXPANDED:
+      return Object.assign({}, state, {
+        zoomPanelExpanded: action.zoomPanelExpanded
       });
     default:
       return state;

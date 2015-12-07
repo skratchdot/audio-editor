@@ -93,3 +93,13 @@ export function setZoomEdit(isEditing, editType) {
     });
   };
 }
+
+export function toggleZoomPanel() {
+  return (dispatch, getState) => {
+    const { zoom } = getState();
+    dispatch({
+      type: types.SET_ZOOM_PANEL_EXPANDED,
+      zoomPanelExpanded: !zoom.zoomPanelExpanded
+    });
+  };
+}

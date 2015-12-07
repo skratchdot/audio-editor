@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Glyphicon } from 'react-bootstrap';
+import { Button, Glyphicon, Collapse, Panel } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as zoomFunctions from '../actions/zoom';
 
@@ -19,7 +19,7 @@ class ZoomBar extends Component {
     }
   }
   render() {
-    const { buffer, zoom } = this.props;
+    const { dispatch, buffer, zoom } = this.props;
     const self = this;
     const bsStyle = 'primary';
     const bsSize = 'xsmall';
@@ -58,36 +58,42 @@ class ZoomBar extends Component {
           &nbsp;
           Show All
         </Button>
-        &nbsp;
-        <small>1 : {ratio}</small>
-        <div>&nbsp;</div>
-        <div>
-          Zoom Length: {zoom.length}
-        </div>
-        <div>
-          Start: {zoom.start}
-          <input
-            type="range"
-            step="1"
-            min="0"
-            max={buffer.length}
-            value={zoom.start}
-            onChange={this.handleSlide.bind(this, 'start')}
-            onInput={this.handleSlide.bind(this, 'start')}
-          />
-        </div>
-        <div>
-          End: {zoom.end}
-          <input
-            type="range"
-            step="1"
-            min="0"
-            max={buffer.length}
-            value={zoom.end}
-            onChange={this.handleSlide.bind(this, 'end')}
-            onInput={this.handleSlide.bind(this, 'end')}
-          />
-        </div>
+        &nbsp;&nbsp;&nbsp;
+        <a style={{cursor: 'pointer'}} onClick={() => {
+            dispatch(zoomFunctions.toggleZoomPanel());
+          }}><small>1 : {ratio}</small></a>
+        <Collapse in={zoom.zoomPanelExpanded}>
+          <Panel header="Zoom Info" bsStyle="info" style={{marginTop: 10}}>
+            <div>
+              Zoom Length: {zoom.length}
+            </div>
+            <hr />
+            <div>
+              Start: {zoom.start}
+              <input
+                type="range"
+                step="1"
+                min="0"
+                max={buffer.length}
+                value={zoom.start}
+                onChange={this.handleSlide.bind(this, 'start')}
+                onInput={this.handleSlide.bind(this, 'start')}
+              />
+            </div>
+            <div>
+              End: {zoom.end}
+              <input
+                type="range"
+                step="1"
+                min="0"
+                max={buffer.length}
+                value={zoom.end}
+                onChange={this.handleSlide.bind(this, 'end')}
+                onInput={this.handleSlide.bind(this, 'end')}
+              />
+            </div>
+          </Panel>
+        </Collapse>
       </div>
 		);
 	}
