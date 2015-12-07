@@ -44,6 +44,31 @@ export function getFilesByGroup(groupKey) {
 }
 
 class ExampleFileSelector extends Component {
+  componentDidMount() {
+    this.dispatchBasedOnUrlParams.call(this, this.props);
+  }
+  componentWillReceiveProps(nextProps) {
+    const oldParams = this.props.router.params;
+    const newParams = nextProps.router.params;
+    if (oldParams.group !== newParams.group ||
+      oldParams.file !== newParams.file) {
+        this.dispatchBasedOnUrlParams.call(this, nextProps);
+    }
+  }
+  dispatchBasedOnUrlParams(props) {
+    const { dispatch, router } = props;
+    const group = router.params.group;
+    const fileName = router.params.file;
+    let file;
+    if (groupData.hasOwnProperty(group)) {
+      groupData[group].forEach(function (f) {
+        if (f[1].split('.')[0] === fileName) {
+          file = f[0];
+        }
+      });
+      dispatch(loadExampleFile(group, file));
+    }
+  }
   loadSelectedExampleFile() {
     const { dispatch } = this.props;
     const selectedGroup = this.refs.selectGroup.getValue();
@@ -146,6 +171,7 @@ class ExampleFileSelector extends Component {
 
 export default connect(function (state) {
   return {
-    examples: state.examples
+    examples: state.examples,
+    router: state.router
   };
 })(ExampleFileSelector);

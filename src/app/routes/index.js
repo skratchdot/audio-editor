@@ -14,7 +14,13 @@ const routes = (
 		<Route path={`/${packageInfo.name}`} component={Home} />
 		<Route path={`/${packageInfo.name}/home`} component={Home} />
 		<Route path={`/${packageInfo.name}/about`} component={About} />
-		<Route path={`/${packageInfo.name}/editor`} component={Editor} />
+		<Route path={`/${packageInfo.name}/editor`} component={Editor}>
+			<Route path="examples">
+				<Route path=":group">
+					<Route path=":file" />
+				</Route>
+			</Route>
+		</Route>
 		<Route path="*" component={NotFound} />
 	</Route>
 );

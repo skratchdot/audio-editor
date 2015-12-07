@@ -1,12 +1,19 @@
 import * as types from '../constants/ActionTypes';
 import { getRandomFile, getRandomGroup } from '../components/ExampleFileSelector';
 import { setBufferFromUrl } from '../actions/buffer';
+import { pushState } from 'redux-router';
 
 export function setExamples(group = '', file = '') {
-  return {
-    type: types.SET_EXAMPLES,
-    group: group,
-    file: file
+  return (dispatch) => {
+    const examplesUrl = '/audio-editor/editor/examples/';
+    let fileName = (file || '').split('/');
+    fileName = fileName[fileName.length - 1].split('.')[0];
+    dispatch({
+      type: types.SET_EXAMPLES,
+      group: group,
+      file: file
+    });
+    dispatch(pushState(null, `${examplesUrl}${group}/${fileName}`));
   };
 }
 
@@ -15,7 +22,9 @@ export function loadExampleFile(group, file) {
     const urlPrefix = 'http://projects.skratchdot.com/audio-files';
     const url = `${urlPrefix}${file}`;
     dispatch(setExamples(group, file));
-    dispatch(setBufferFromUrl(url));
+    if (typeof file === 'string' && file.length) {
+      dispatch(setBufferFromUrl(url));
+    }
   };
 }
 

@@ -70,18 +70,6 @@ self.onmessage = function (e) {
     buckets[i] = initBucket(Math.round(loopStart), loopEnd);
     loopStart += itemsPerBucket;
   }
-  const logit = function (logMessage) {
-    console.log(
-      logMessage, ':',
-      'startRenderTime', startRenderTime,
-      'buckets', buckets,
-      'mainLoopIndex', mainLoopIndex,
-      'newBufferLength', newBufferLength,
-      'numBuckets', numBuckets,
-      'itemsPerBucket', itemsPerBucket
-    );
-  };
-  logit('start');
   while (mainLoopIndex < mainLoopEnd) {
     for (let i = 0; i < numBuckets; i++) {
       let val = buffer[buckets[i].loopStart];
@@ -96,7 +84,6 @@ self.onmessage = function (e) {
     }
     emit(false);
   }
-  logit('done');
   emit(true);
 };
 
