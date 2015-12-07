@@ -6,3 +6,6 @@ node_js:
   - '4.0'
 before_script:
   - npm install -g gulp
+script:
+  - gulp test
+  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls --verbose
