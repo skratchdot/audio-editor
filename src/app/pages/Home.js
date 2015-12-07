@@ -13,7 +13,13 @@ class Home extends Component {
             <small>An audio editor built with React</small>
           </h1>
           <p>
-            This is an example home page
+            This is currently a work-in-progress, and not yet
+            complete.  It is being actively developed, and you
+            can log feature requests on the
+            &nbsp;
+            <a href="https://github.com/skratchdot/audio-editor/">
+              Github Issues Page.
+            </a>
           </p>
         </Jumbotron>
       </div>

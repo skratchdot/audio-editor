@@ -400,10 +400,6 @@
 		"AKWF_0100.wav"
 	],
 	[
-		"/akwf/AKWF_0001/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
-	[
 		"/akwf/AKWF_0002/AKWF_0101.wav",
 		"AKWF_0101.wav"
 	],
@@ -802,10 +798,6 @@
 	[
 		"/akwf/AKWF_0002/AKWF_0200.wav",
 		"AKWF_0200.wav"
-	],
-	[
-		"/akwf/AKWF_0002/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
 	],
 	[
 		"/akwf/AKWF_0003/AKWF_0201.wav",
@@ -1208,10 +1200,6 @@
 		"AKWF_0300.wav"
 	],
 	[
-		"/akwf/AKWF_0003/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
-	[
 		"/akwf/AKWF_0004/AKWF_0301.wav",
 		"AKWF_0301.wav"
 	],
@@ -1610,10 +1598,6 @@
 	[
 		"/akwf/AKWF_0004/AKWF_0400.wav",
 		"AKWF_0400.wav"
-	],
-	[
-		"/akwf/AKWF_0004/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
 	],
 	[
 		"/akwf/AKWF_0005/AKWF_0401.wav",
@@ -2016,10 +2000,6 @@
 		"AKWF_0500.wav"
 	],
 	[
-		"/akwf/AKWF_0005/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
-	[
 		"/akwf/AKWF_0006/AKWF_0501.wav",
 		"AKWF_0501.wav"
 	],
@@ -2418,10 +2398,6 @@
 	[
 		"/akwf/AKWF_0006/AKWF_0600.wav",
 		"AKWF_0600.wav"
-	],
-	[
-		"/akwf/AKWF_0006/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
 	],
 	[
 		"/akwf/AKWF_0007/AKWF_0601.wav",
@@ -2824,10 +2800,6 @@
 		"AKWF_0700.wav"
 	],
 	[
-		"/akwf/AKWF_0007/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
-	[
 		"/akwf/AKWF_0008/AKWF_0701.wav",
 		"AKWF_0701.wav"
 	],
@@ -3226,10 +3198,6 @@
 	[
 		"/akwf/AKWF_0008/AKWF_0800.wav",
 		"AKWF_0800.wav"
-	],
-	[
-		"/akwf/AKWF_0008/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
 	],
 	[
 		"/akwf/AKWF_0009/AKWF_0801.wav",
@@ -3632,10 +3600,6 @@
 		"AKWF_0900.wav"
 	],
 	[
-		"/akwf/AKWF_0009/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
-	[
 		"/akwf/AKWF_0010/AKWF_0901.wav",
 		"AKWF_0901.wav"
 	],
@@ -4035,10 +3999,7 @@
 		"/akwf/AKWF_0010/AKWF_1000.wav",
 		"AKWF_1000.wav"
 	],
-	[
-		"/akwf/AKWF_0010/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_0011/AKWF_1001.wav",
 		"AKWF_1001.wav"
@@ -4439,10 +4400,7 @@
 		"/akwf/AKWF_0011/AKWF_1100.wav",
 		"AKWF_1100.wav"
 	],
-	[
-		"/akwf/AKWF_0011/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_0012/AKWF_1101.wav",
 		"AKWF_1101.wav"
@@ -4843,10 +4801,7 @@
 		"/akwf/AKWF_0012/AKWF_1200.wav",
 		"AKWF_1200.wav"
 	],
-	[
-		"/akwf/AKWF_0012/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_0013/AKWF_1201.wav",
 		"AKWF_1201.wav"
@@ -5247,10 +5202,7 @@
 		"/akwf/AKWF_0013/AKWF_1300.wav",
 		"AKWF_1300.wav"
 	],
-	[
-		"/akwf/AKWF_0013/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_0014/AKWF_1301.wav",
 		"AKWF_1301.wav"
@@ -5651,10 +5603,7 @@
 		"/akwf/AKWF_0014/AKWF_1400.wav",
 		"AKWF_1400.wav"
 	],
-	[
-		"/akwf/AKWF_0014/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_0015/AKWF_1401.wav",
 		"AKWF_1401.wav"
@@ -6055,10 +6004,7 @@
 		"/akwf/AKWF_0015/AKWF_1500.wav",
 		"AKWF_1500.wav"
 	],
-	[
-		"/akwf/AKWF_0015/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_0016/AKWF_1501.wav",
 		"AKWF_1501.wav"
@@ -6459,10 +6405,7 @@
 		"/akwf/AKWF_0016/AKWF_1600.wav",
 		"AKWF_1600.wav"
 	],
-	[
-		"/akwf/AKWF_0016/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_0017/AKWF_1601.wav",
 		"AKWF_1601.wav"
@@ -6863,10 +6806,7 @@
 		"/akwf/AKWF_0017/AKWF_1700.wav",
 		"AKWF_1700.wav"
 	],
-	[
-		"/akwf/AKWF_0017/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_0018/AKWF_1701.wav",
 		"AKWF_1701.wav"
@@ -7267,10 +7207,7 @@
 		"/akwf/AKWF_0018/AKWF_1800.wav",
 		"AKWF_1800.wav"
 	],
-	[
-		"/akwf/AKWF_0018/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_0019/AKWF_1801.wav",
 		"AKWF_1801.wav"
@@ -7671,10 +7608,7 @@
 		"/akwf/AKWF_0019/AKWF_1900.wav",
 		"AKWF_1900.wav"
 	],
-	[
-		"/akwf/AKWF_0019/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_0020/AKWF_1901.wav",
 		"AKWF_1901.wav"
@@ -8119,10 +8053,7 @@
 		"/akwf/AKWF_0020/AKWF_2011.wav",
 		"AKWF_2011.wav"
 	],
-	[
-		"/akwf/AKWF_0020/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_aguitar/AKWF_aguitar_0001.wav",
 		"AKWF_aguitar_0001.wav"
@@ -8275,10 +8206,7 @@
 		"/akwf/AKWF_aguitar/AKWF_aguitar_0038.wav",
 		"AKWF_aguitar_0038.wav"
 	],
-	[
-		"/akwf/AKWF_aguitar/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_altosax/AKWF_altosax_0001.wav",
 		"AKWF_altosax_0001.wav"
@@ -8383,10 +8311,7 @@
 		"/akwf/AKWF_altosax/AKWF_altosax_0026.wav",
 		"AKWF_altosax_0026.wav"
 	],
-	[
-		"/akwf/AKWF_altosax/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_birds/AKWF_birds_0001.wav",
 		"AKWF_birds_0001.wav"
@@ -8443,10 +8368,7 @@
 		"/akwf/AKWF_birds/AKWF_birds_0014.wav",
 		"AKWF_birds_0014.wav"
 	],
-	[
-		"/akwf/AKWF_birds/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_bitreduced/AKWF_bitreduced_0001.wav",
 		"AKWF_bitreduced_0001.wav"
@@ -8719,10 +8641,7 @@
 		"/akwf/AKWF_bitreduced/AKWF_tri8bit.wav",
 		"AKWF_tri8bit.wav"
 	],
-	[
-		"/akwf/AKWF_bitreduced/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_bw_blended/AKWF_blended_0001.wav",
 		"AKWF_blended_0001.wav"
@@ -9015,10 +8934,7 @@
 		"/akwf/AKWF_bw_blended/AKWF_blended_0080.wav",
 		"AKWF_blended_0080.wav"
 	],
-	[
-		"/akwf/AKWF_bw_blended/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_bw_perfectwaves/AKWF_saw.wav",
 		"AKWF_saw.wav"
@@ -9035,10 +8951,7 @@
 		"/akwf/AKWF_bw_perfectwaves/AKWF_tri.wav",
 		"AKWF_tri.wav"
 	],
-	[
-		"/akwf/AKWF_bw_perfectwaves/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_bw_saw/AKWF_saw_0001.wav",
 		"AKWF_saw_0001.wav"
@@ -9239,10 +9152,7 @@
 		"/akwf/AKWF_bw_saw/AKWF_saw_0050.wav",
 		"AKWF_saw_0050.wav"
 	],
-	[
-		"/akwf/AKWF_bw_saw/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_bw_sawbright/AKWF_bsaw_0001.wav",
 		"AKWF_bsaw_0001.wav"
@@ -9283,10 +9193,7 @@
 		"/akwf/AKWF_bw_sawbright/AKWF_bsaw_0010.wav",
 		"AKWF_bsaw_0010.wav"
 	],
-	[
-		"/akwf/AKWF_bw_sawbright/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_bw_sawgap/AKWF_gapsaw_0001.wav",
 		"AKWF_gapsaw_0001.wav"
@@ -9455,10 +9362,7 @@
 		"/akwf/AKWF_bw_sawgap/AKWF_gapsaw_0042.wav",
 		"AKWF_gapsaw_0042.wav"
 	],
-	[
-		"/akwf/AKWF_bw_sawgap/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_bw_sawrounded/AKWF_R_asym_saw_01.wav",
 		"AKWF_R_asym_saw_01.wav"
@@ -9667,10 +9571,7 @@
 		"/akwf/AKWF_bw_sawrounded/AKWF_R_sym_saw_26.wav",
 		"AKWF_R_sym_saw_26.wav"
 	],
-	[
-		"/akwf/AKWF_bw_sawrounded/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_bw_sin/AKWF_sin_0001.wav",
 		"AKWF_sin_0001.wav"
@@ -9719,10 +9620,7 @@
 		"/akwf/AKWF_bw_sin/AKWF_sin_0012.wav",
 		"AKWF_sin_0012.wav"
 	],
-	[
-		"/akwf/AKWF_bw_sin/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_bw_squ/AKWF_squ_0001.wav",
 		"AKWF_squ_0001.wav"
@@ -10123,10 +10021,7 @@
 		"/akwf/AKWF_bw_squ/AKWF_squ_0100.wav",
 		"AKWF_squ_0100.wav"
 	],
-	[
-		"/akwf/AKWF_bw_squ/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_bw_squrounded/AKWF_rAsymSqu_01.wav",
 		"AKWF_rAsymSqu_01.wav"
@@ -10335,10 +10230,7 @@
 		"/akwf/AKWF_bw_squrounded/AKWF_rSymSqu_26.wav",
 		"AKWF_rSymSqu_26.wav"
 	],
-	[
-		"/akwf/AKWF_bw_squrounded/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_bw_tri/AKWF_tri_0001.wav",
 		"AKWF_tri_0001.wav"
@@ -10439,10 +10331,7 @@
 		"/akwf/AKWF_bw_tri/AKWF_tri_0025.wav",
 		"AKWF_tri_0025.wav"
 	],
-	[
-		"/akwf/AKWF_bw_tri/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_c604/AKWF_c604_0001.wav",
 		"AKWF_c604_0001.wav"
@@ -10571,10 +10460,7 @@
 		"/akwf/AKWF_c604/AKWF_c604_0032.wav",
 		"AKWF_c604_0032.wav"
 	],
-	[
-		"/akwf/AKWF_c604/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_cello/AKWF_cello_0001.wav",
 		"AKWF_cello_0001.wav"
@@ -10651,10 +10537,7 @@
 		"/akwf/AKWF_cello/AKWF_cello_0019.wav",
 		"AKWF_cello_0019.wav"
 	],
-	[
-		"/akwf/AKWF_cello/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_clarinett/AKWF_clarinett_0001.wav",
 		"AKWF_clarinett_0001.wav"
@@ -10755,10 +10638,7 @@
 		"/akwf/AKWF_clarinett/AKWF_clarinett_0025.wav",
 		"AKWF_clarinett_0025.wav"
 	],
-	[
-		"/akwf/AKWF_clarinett/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_clavinet/AKWF_clavinet_0001.wav",
 		"AKWF_clavinet_0001.wav"
@@ -10891,10 +10771,7 @@
 		"/akwf/AKWF_clavinet/AKWF_clavinet_0033.wav",
 		"AKWF_clavinet_0033.wav"
 	],
-	[
-		"/akwf/AKWF_clavinet/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_dbass/AKWF_dbass_0001.wav",
 		"AKWF_dbass_0001.wav"
@@ -11171,10 +11048,7 @@
 		"/akwf/AKWF_dbass/AKWF_dbass_0069.wav",
 		"AKWF_dbass_0069.wav"
 	],
-	[
-		"/akwf/AKWF_dbass/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_distorted/AKWF_distorted_0001.wav",
 		"AKWF_distorted_0001.wav"
@@ -11355,10 +11229,7 @@
 		"/akwf/AKWF_distorted/AKWF_distorted_0045.wav",
 		"AKWF_distorted_0045.wav"
 	],
-	[
-		"/akwf/AKWF_distorted/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_ebass/AKWF_ebass_0001.wav",
 		"AKWF_ebass_0001.wav"
@@ -11639,10 +11510,7 @@
 		"/akwf/AKWF_ebass/AKWF_ebass_0070.wav",
 		"AKWF_ebass_0070.wav"
 	],
-	[
-		"/akwf/AKWF_ebass/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_eguitar/AKWF_eguitar_0001.wav",
 		"AKWF_eguitar_0001.wav"
@@ -11731,10 +11599,7 @@
 		"/akwf/AKWF_eguitar/AKWF_eguitar_0022.wav",
 		"AKWF_eguitar_0022.wav"
 	],
-	[
-		"/akwf/AKWF_eguitar/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_eorgan/AKWF_eorgan_0001.wav",
 		"AKWF_eorgan_0001.wav"
@@ -12351,10 +12216,7 @@
 		"/akwf/AKWF_eorgan/AKWF_eorgan_0154.wav",
 		"AKWF_eorgan_0154.wav"
 	],
-	[
-		"/akwf/AKWF_eorgan/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_epiano/AKWF_epiano_0001.wav",
 		"AKWF_epiano_0001.wav"
@@ -12647,10 +12509,7 @@
 		"/akwf/AKWF_epiano/AKWF_epiano_0073.wav",
 		"AKWF_epiano_0073.wav"
 	],
-	[
-		"/akwf/AKWF_epiano/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_flute/AKWF_flute_0001.wav",
 		"AKWF_flute_0001.wav"
@@ -12719,10 +12578,7 @@
 		"/akwf/AKWF_flute/AKWF_flute_0017.wav",
 		"AKWF_flute_0017.wav"
 	],
-	[
-		"/akwf/AKWF_flute/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_fmsynth/AKWF_fmsynth_0001.wav",
 		"AKWF_fmsynth_0001.wav"
@@ -13211,10 +13067,7 @@
 		"/akwf/AKWF_fmsynth/AKWF_fmsynth_0122.wav",
 		"AKWF_fmsynth_0122.wav"
 	],
-	[
-		"/akwf/AKWF_fmsynth/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_granular/AKWF_granular_0001.wav",
 		"AKWF_granular_0001.wav"
@@ -13391,10 +13244,7 @@
 		"/akwf/AKWF_granular/AKWF_granular_0044.wav",
 		"AKWF_granular_0044.wav"
 	],
-	[
-		"/akwf/AKWF_granular/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_hdrawn/AKWF_hdrawn_0001.wav",
 		"AKWF_hdrawn_0001.wav"
@@ -13595,10 +13445,7 @@
 		"/akwf/AKWF_hdrawn/AKWF_hdrawn_0050.wav",
 		"AKWF_hdrawn_0050.wav"
 	],
-	[
-		"/akwf/AKWF_hdrawn/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_hvoice/AKWF_hvoice_0001.wav",
 		"AKWF_hvoice_0001.wav"
@@ -14015,10 +13862,7 @@
 		"/akwf/AKWF_hvoice/AKWF_hvoice_0104.wav",
 		"AKWF_hvoice_0104.wav"
 	],
-	[
-		"/akwf/AKWF_hvoice/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_linear/AKWF_linear_0001.wav",
 		"AKWF_linear_0001.wav"
@@ -14359,10 +14203,7 @@
 		"/akwf/AKWF_linear/AKWF_linear_0085.wav",
 		"AKWF_linear_0085.wav"
 	],
-	[
-		"/akwf/AKWF_linear/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_oboe/AKWF_oboe_0001.wav",
 		"AKWF_oboe_0001.wav"
@@ -14415,10 +14256,7 @@
 		"/akwf/AKWF_oboe/AKWF_oboe_0013.wav",
 		"AKWF_oboe_0013.wav"
 	],
-	[
-		"/akwf/AKWF_oboe/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_oscchip/AKWF_oscchip_0001.wav",
 		"AKWF_oscchip_0001.wav"
@@ -15051,10 +14889,7 @@
 		"/akwf/AKWF_oscchip/AKWF_oscchip_0158.wav",
 		"AKWF_oscchip_0158.wav"
 	],
-	[
-		"/akwf/AKWF_oscchip/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_overtone/AKWF_overtone_0001.wav",
 		"AKWF_overtone_0001.wav"
@@ -15231,10 +15066,7 @@
 		"/akwf/AKWF_overtone/AKWF_overtone_0044.wav",
 		"AKWF_overtone_0044.wav"
 	],
-	[
-		"/akwf/AKWF_overtone/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_piano/AKWF_piano_0001.wav",
 		"AKWF_piano_0001.wav"
@@ -15355,10 +15187,7 @@
 		"/akwf/AKWF_piano/AKWF_piano_0030.wav",
 		"AKWF_piano_0030.wav"
 	],
-	[
-		"/akwf/AKWF_piano/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_pluckalgo/AKWF_pluckalgo_0001.wav",
 		"AKWF_pluckalgo_0001.wav"
@@ -15395,10 +15224,7 @@
 		"/akwf/AKWF_pluckalgo/AKWF_pluckalgo_0009.wav",
 		"AKWF_pluckalgo_0009.wav"
 	],
-	[
-		"/akwf/AKWF_pluckalgo/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_raw/AKWF_raw_0001.wav",
 		"AKWF_raw_0001.wav"
@@ -15543,10 +15369,7 @@
 		"/akwf/AKWF_raw/AKWF_raw_0036.wav",
 		"AKWF_raw_0036.wav"
 	],
-	[
-		"/akwf/AKWF_raw/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_sinharm/AKWF_sinharm_0001.wav",
 		"AKWF_sinharm_0001.wav"
@@ -15611,10 +15434,7 @@
 		"/akwf/AKWF_sinharm/AKWF_sinharm_0016.wav",
 		"AKWF_sinharm_0016.wav"
 	],
-	[
-		"/akwf/AKWF_sinharm/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_snippets/AKWF_snippet_0001.wav",
 		"AKWF_snippet_0001.wav"
@@ -15803,10 +15623,7 @@
 		"/akwf/AKWF_snippets/AKWF_snippet_0047.wav",
 		"AKWF_snippet_0047.wav"
 	],
-	[
-		"/akwf/AKWF_snippets/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_stereo/AKWF_stereo_0001.wav",
 		"AKWF_stereo_0001.wav"
@@ -16607,10 +16424,7 @@
 		"/akwf/AKWF_stereo/AKWF_stereo_0200.wav",
 		"AKWF_stereo_0200.wav"
 	],
-	[
-		"/akwf/AKWF_stereo/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_stringbox/AKWF_cheeze_0001.wav",
 		"AKWF_cheeze_0001.wav"
@@ -16635,10 +16449,7 @@
 		"/akwf/AKWF_stringbox/AKWF_cheeze_0006.wav",
 		"AKWF_cheeze_0006.wav"
 	],
-	[
-		"/akwf/AKWF_stringbox/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_symetric/AKWF_symetric_0001.wav",
 		"AKWF_symetric_0001.wav"
@@ -16707,10 +16518,7 @@
 		"/akwf/AKWF_symetric/AKWF_symetric_0017.wav",
 		"AKWF_symetric_0017.wav"
 	],
-	[
-		"/akwf/AKWF_symetric/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_theremin/AKWF_tannerin_0001.wav",
 		"AKWF_tannerin_0001.wav"
@@ -16815,10 +16623,7 @@
 		"/akwf/AKWF_theremin/AKWF_theremin_0022.wav",
 		"AKWF_theremin_0022.wav"
 	],
-	[
-		"/akwf/AKWF_theremin/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_vgame/AKWF_vgame_0001.wav",
 		"AKWF_vgame_0001.wav"
@@ -17367,10 +17172,7 @@
 		"/akwf/AKWF_vgame/AKWF_vgame_0137.wav",
 		"AKWF_vgame_0137.wav"
 	],
-	[
-		"/akwf/AKWF_vgame/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_vgamebasic/AKWF_vgsaw_0001.wav",
 		"AKWF_vgsaw_0001.wav"
@@ -17627,10 +17429,7 @@
 		"/akwf/AKWF_vgamebasic/AKWF_vgtri_0016.wav",
 		"AKWF_vgtri_0016.wav"
 	],
-	[
-		"/akwf/AKWF_vgamebasic/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
+
 	[
 		"/akwf/AKWF_violin/AKWF_violin_0001.wav",
 		"AKWF_violin_0001.wav"
@@ -17686,13 +17485,5 @@
 	[
 		"/akwf/AKWF_violin/AKWF_violin_0014.wav",
 		"AKWF_violin_0014.wav"
-	],
-	[
-		"/akwf/AKWF_violin/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
-	],
-	[
-		"/akwf/AdventureKidWaveforms.txt",
-		"AdventureKidWaveforms.txt"
 	]
 ]
