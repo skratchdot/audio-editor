@@ -1,0 +1,4 @@
+[submodule "build/prod"]
+	path = build/prod
+	url = git@github.com:skratchdot/audio-editor.git
+	branch = gh-pages
