@@ -17,7 +17,7 @@ class Home extends Component {
             complete.  It is being actively developed, and you
             can log feature requests on the
             &nbsp;
-            <a href="https://github.com/skratchdot/audio-editor/">
+            <a href="https://github.com/skratchdot/audio-editor/issues">
               Github Issues Page.
             </a>
           </p>

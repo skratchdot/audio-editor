@@ -31,4 +31,5 @@ tags
 coverage/
 
 # ignores specific to this repo
-build/
+build/dev
+transpiled/*

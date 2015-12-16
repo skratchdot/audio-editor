@@ -1,15 +1,17 @@
 /*eslint prefer-template: 0, no-console: 0 */
+const babel = require('gulp-babel');
 const eslint = require('gulp-eslint');
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const isparta = require('isparta');
 const istanbul = require('gulp-istanbul');
 const mocha = require('gulp-mocha');
-const rimraf = require('gulp-rimraf');
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
 const packageInfo = require('./package.json');
+const rimraf = require('gulp-rimraf');
+const sourcemaps = require('gulp-sourcemaps');
+const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
+const WebpackDevServer = require('webpack-dev-server');
 
 const port = 8080;
 const devDir = `${__dirname}/build/dev/${packageInfo.name}`;
@@ -18,7 +20,8 @@ const files = {
 	clean: [`${devDir}/*`, `${prodDir}/*`],
 	cover: ['./src/**/*.js', '!./src/cli/cli.js'],
 	lint: ['./src/**/*.js', './gulpfile.js', './webpack.config.js'],
-	test: ['./test/**/*.js']
+	test: ['./test/**/*.js'],
+	transpile: ['./src/**/*.js', '!./src/app/**/*']
 };
 
 gulp.task('clean', function () {
@@ -39,6 +42,14 @@ gulp.task('lint', function () {
 		// To have the process exit with an error code (1) on
 		// lint error, return the stream and pipe to failAfterError last.
 		.pipe(eslint.failAfterError());
+});
+
+gulp.task('transpile', function () {
+  return gulp.src(files.transpile)
+    .pipe(sourcemaps.init())
+    .pipe(babel())
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('transpiled'));
 });
 
 gulp.task('test', function () {
@@ -142,11 +153,11 @@ gulp.task('server', function () {
 });
 
 gulp.task('build-clean', ['clean', 'build']);
-gulp.task('build', ['lint', 'build:prod', 'build:dev']);
+gulp.task('build', ['lint', 'transpile', 'build:prod', 'build:dev']);
 gulp.task('default', ['build', 'server', 'watch']);
 
 gulp.task('watch', function () {
-	['lint'].forEach(function (name) {
+	['lint', 'transpile'].forEach(function (name) {
 		gulp.watch(files[name], [name]);
 	});
 });
