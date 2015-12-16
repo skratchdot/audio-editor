@@ -1,6 +1,7 @@
 import * as types from '../constants/ActionTypes';
 import path from 'path';
 import { setName } from './name';
+import { getInitialStatsWaveform } from './statsWaveform';
 import { setPlaybackPosition } from './playbackPosition';
 import { setWaveformData } from './waveformData';
 import { setValidFile } from './validFile';
@@ -72,6 +73,9 @@ export function startWorker(key) {
 export function handleBuffer(buffer, name) {
   return (dispatch) => {
     dispatch(setBuffer(buffer));
+    if (buffer.length) {
+      dispatch(getInitialStatsWaveform(buffer));
+    }
     dispatch(setName(name));
     dispatch(setPlaybackPosition(0, 'actions/buffer'));
     dispatch(zoomShowAll());

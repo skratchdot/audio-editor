@@ -39,7 +39,7 @@ class DisplayAmplitudePath extends Component {
         </g>
         <g>
           <path d={getPath('posMax')} fill={color} />
-          <path d={getPath('negMax')} fill={color} />
+          <path d={getPath('negMin')} fill={color} />
         </g>
         <g>
           <path d={getPath('posAvg')} fill={color} />

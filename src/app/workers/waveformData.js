@@ -1,4 +1,5 @@
 import { getWaveformDataSchema } from '../defaults/waveformData';
+import AudioStats from '../../lib/AudioStats';
 
 self.onmessage = function (e) {
   const startRenderTime = Date.now();
@@ -17,14 +18,13 @@ self.onmessage = function (e) {
     if (isFinished || Date.now() - lastRenderTime > forceRenderTime) {
       const result = getWaveformDataSchema();
       for (let i = 0; i < buckets.length; i++) {
-        const neg = buckets[i].neg;
-        const pos = buckets[i].pos;
-        result.posMin.push(pos.min || 0);
-        result.posAvg.push(pos.sum / (pos.count || 1));
-        result.posMax.push(pos.max || 0);
-        result.negMin.push((0 - neg.min) || 0);
-        result.negAvg.push(0 - (neg.sum / (neg.count || 1)));
-        result.negMax.push((0 - neg.max) || 0);
+        const stats = buckets[i].audio.get(true);
+        result.posMin.push(stats.pos.min);
+        result.posAvg.push(stats.pos.mean);
+        result.posMax.push(stats.pos.max);
+        result.negMin.push(stats.neg.min);
+        result.negAvg.push(stats.neg.mean);
+        result.negMax.push(stats.neg.max);
       }
       result.renderTime = Date.now() - startRenderTime;
       self.postMessage(result);
@@ -35,33 +35,11 @@ self.onmessage = function (e) {
     }
   };
   const initBucket = function (loopStart, loopEnd) {
-    return {
-      neg: {
-        count: 0,
-        sum: 0,
-        min: null,
-        max: null
-      },
-      pos: {
-        count: 0,
-        sum: 0,
-        min: null,
-        max: null
-      },
-      loopStart: loopStart,
-      loopEnd: loopEnd
-    };
-  };
-  const updateBucket = function (obj, key, val) {
-    obj[key].count++;
-    obj[key].sum += val;
-    if (val < obj[key].min) {
-      obj[key].min = val;
-    }
-    if (val > obj[key].max) {
-      obj[key].max = val;
-    }
-    return obj;
+    const bucket = {};
+    bucket.audio = new AudioStats();
+    bucket.loopStart = loopStart;
+    bucket.loopEnd = loopEnd;
+    return bucket;
   };
   // create buckets
   let loopStart = mainLoopIndex;
@@ -72,13 +50,8 @@ self.onmessage = function (e) {
   }
   while (mainLoopIndex < mainLoopEnd) {
     for (let i = 0; i < numBuckets; i++) {
-      let val = buffer[buckets[i].loopStart];
-      if (val < 0) {
-        val = Math.abs(val);
-        buckets[i] = updateBucket(buckets[i], 'neg', val);
-      } else if (val > 0) {
-        buckets[i] = updateBucket(buckets[i], 'pos', val);
-      }
+      const val = buffer[buckets[i].loopStart];
+      buckets[i].audio.process(val);
       buckets[i].loopStart++;
       mainLoopIndex++;
     }

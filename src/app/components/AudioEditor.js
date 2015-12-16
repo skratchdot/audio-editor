@@ -3,6 +3,7 @@ import { Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import arrayGet from 'array-any-index';
 import ease from 'd3-ease';
+import WaveformAmplitude from './display/WaveformAmplitude';
 import DisplayAmplitudePath from './DisplayAmplitudePath';
 import DisplayContainer from './DisplayContainer';
 import DisplayMessage from './DisplayMessage';
@@ -154,7 +155,12 @@ class AudioEditor extends Component {
         <Row>
           <Col md={12}>
             <DisplayContainer>
-              <DisplayAmplitudePath { ...waveformData.zoom } />
+              <WaveformAmplitude
+                key={1024}
+                start={zoom.start}
+                end={zoom.end}
+                suffix="Mono"
+              />
               <DisplayPlaybackPosition min={zoom.start} max={zoom.end} />
               <DisplayMessage { ...waveformData.zoom } />
             </DisplayContainer>
@@ -172,7 +178,13 @@ class AudioEditor extends Component {
         <Row>
           <Col md={12}>
             <DisplayContainer>
-              <DisplayAmplitudePath { ...waveformData.overview } height={50} />
+              <WaveformAmplitude
+                key={1024}
+                start={0}
+                end={buffer.length - 1}
+                suffix="Mono"
+                height={50}
+              />
               <DisplayPlaybackPosition min={0} max={buffer.length - 1} />
               <ZoomSlider />
               <DisplayMessage { ...waveformData.overview } />
