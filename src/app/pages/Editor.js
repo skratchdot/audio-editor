@@ -1,45 +1,25 @@
 import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
-import { Row, Col, Button, Glyphicon, Input, Jumbotron, Table } from 'react-bootstrap';
+import { Row, Col, Button, Glyphicon, Jumbotron, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import humanizeDuration from 'humanize-duration';
+import FileProcessor from 'react-file-processor';
 import { setBufferFromFile } from '../actions/buffer';
 import AudioEditor from '../components/AudioEditor';
 import ExampleFileSelector from '../components/ExampleFileSelector';
 
 class Editor extends Component {
-  componentDidMount() {
-    this.boundHandleFileSelect =  this.handleFileSelect.bind(this);
-    window.addEventListener('dragover', this.handleFileDrag, false);
-    window.addEventListener('dragleave', this.handleFileDrag);
-    window.addEventListener('drop', this.boundHandleFileSelect, false);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('dragover', this.handleFileDrag);
-    window.removeEventListener('dragleave', this.handleFileDrag);
-    window.removeEventListener('drop', this.boundHandleFileSelect);
-  }
   handleFileButtonClick() {
-    const fileButtonContainer = findDOMNode(this.refs.fileButtonContainer);
-    const fileButton = fileButtonContainer.querySelector('input[type="file"]');
-    fileButton.click();
+    this.refs.fileProcessor.chooseFile();
   }
-  handleFileDrag(e) {
-    e.stopPropagation();
-    e.preventDefault();
-  }
-  handleFileSelect(e) {
+  handleFileSelect(e, files) {
     const { dispatch } = this.props;
-
-    // cancel event
-    this.handleFileDrag(e);
-
-    // fetch FileList object
-    const files = e.target.files || e.dataTransfer.files;
-
-    // process last file only
-    if (files.length) {
-      dispatch(setBufferFromFile(files[files.length - 1]));
+    let file;
+    for (let i = 0; i < files.length; i++) {
+      file = files[i];
+      if (file.size > 0) {
+        dispatch(setBufferFromFile(file));
+        break;
+      }
     }
   }
   render() {
@@ -60,21 +40,18 @@ class Editor extends Component {
               <hr />
               <Row>
                 <Col md={12}>
-                  <Input
-                    ref="fileButtonContainer"
-                    type="file"
-                    wrapperClassName="btn-file"
-                    label="Select a file from your computer"
-                    onChange={this.handleFileSelect.bind(this)}
-                  />
-                  <Button
-                    bsStyle="primary"
-                    style={{width: '100%'}}
-                    onClick={this.handleFileButtonClick.bind(this)}>
-                    <Glyphicon glyph="folder-open" />
-                    &nbsp;&nbsp;
-                    Choose Local File
-                  </Button>
+                  <FileProcessor
+                    ref="fileProcessor"
+                    onFileSelect={this.handleFileSelect.bind(this)}>
+                    <Button
+                      bsStyle="primary"
+                      style={{width: '100%'}}
+                      onClick={this.handleFileButtonClick.bind(this)}>
+                      <Glyphicon glyph="folder-open" />
+                      &nbsp;&nbsp;
+                      Choose Local File
+                    </Button>
+                  </FileProcessor>
                 </Col>
               </Row>
               <hr />
