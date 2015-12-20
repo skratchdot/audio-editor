@@ -32,8 +32,9 @@ export function start(key) {
   return (dispatch, getState) => {
     const { name } = getState();
     const action = { type: types.SET_STATUS };
-    action[`${key}Start`] = Date.now();
-    action[`${key}End`] = Date.now();
+    const currentTime = Date.now();
+    action[`${key}Start`] = currentTime;
+    action[`${key}End`] = currentTime;
     action[key] = true;
     dispatch(action);
     dispatch(setStatusMessage(`${startKeys[key]} "${name}".`));
@@ -44,11 +45,13 @@ export function end(key, isFinished = true) {
   return (dispatch, getState) => {
     const { name } = getState();
     const action = { type: types.SET_STATUS };
+    let statusVerb = startKeys[key];
     action[`${key}End`] = Date.now();
     if (isFinished) {
       action[key] = false;
+      statusVerb = endKeys[key];
     }
     dispatch(action);
-    dispatch(setStatusMessage(`${endKeys[key]} "${name}".`));
+    dispatch(setStatusMessage(`${statusVerb} "${name}".`));
   };
 }

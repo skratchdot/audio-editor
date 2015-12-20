@@ -25,6 +25,7 @@ export function setBufferFromUrl(url = '') {
 		};
     dispatch(setBuffer());
     dispatch(setName(name));
+    dispatch(initStatus());
     dispatch(start('loading'));
     dispatch(setStatusValid(false));
 		request.send();
@@ -40,6 +41,7 @@ export function setBufferFromFile(file) {
     };
     dispatch(setBuffer());
     dispatch(setName(file.name));
+    dispatch(initStatus());
     dispatch(start('loading'));
     dispatch(setStatusValid(false));
     reader.readAsArrayBuffer(file);
