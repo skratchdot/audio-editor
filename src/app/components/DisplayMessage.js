@@ -1,24 +1,60 @@
 import React, { Component } from 'react';
+import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { end } from '../actions/status';
+import raf from 'raf';
+import humanizeDuration from 'humanize-duration';
 
 class DisplayMessage extends Component {
-  render() {
-    const { validFile } = this.props;
-    let extraClassInfo = 'display-message-show';
-    const messages = [];
-    if (!validFile.isValid) {
-      messages.push(<strong key="invalid">No file loaded.</strong>);
-      if (validFile.message && validFile.message.length) {
-        messages.push(<strong key="validFileMessage">&nbsp;&nbsp;{validFile.message}</strong>);
+  componentDidMount() {
+    raf(this.updateStatus.bind(this));
+  }
+  updateStatus() {
+    const { dispatch, status, showExtended } = this.props;
+    if (showExtended) {
+      if (status.loading) {
+        dispatch(end('loading', false));
+      } else if (status.decoding) {
+        dispatch(end('decoding', false));
       }
+      raf(this.updateStatus.bind(this));
     }
-    if (validFile.isValid) {
-      extraClassInfo = 'display-message-hide';
+  }
+  render() {
+    const { status, showExtended } = this.props;
+    let extended = '';
+    const extraClassInfo = `display-message-${status.isValid ? 'hide' : 'show'}`;
+    const printRow = function (key) {
+      const statusKey = key.toLowerCase();
+      const start = status[`${statusKey}Start`];
+      const end = status[`${statusKey}End`];
+      const time = humanizeDuration(end - start);
+      return (
+        <tr>
+          <td className="text-right">{key}:</td>
+          <td>{time}</td>
+        </tr>
+      );
+    };
+    if (showExtended) {
+      extended = (
+        <Table bordered condensed style={{
+            marginTop: 10
+          }}>
+          <tbody>
+            {printRow('Loading')}
+            {printRow('Decoding')}
+          </tbody>
+        </Table>
+      );
     }
     return (
       <div className={`display-message ${extraClassInfo}`}>
         <div className="display-message-box">
-          {messages}
+          <div>
+            <div><strong>{status.message}</strong></div>
+            <div>{extended}</div>
+          </div>
         </div>
       </div>
     );
@@ -27,6 +63,6 @@ class DisplayMessage extends Component {
 
 export default connect(function (state) {
   return {
-    validFile: state.validFile
+    status: state.status
   };
 })(DisplayMessage);

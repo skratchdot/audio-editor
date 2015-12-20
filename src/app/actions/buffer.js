@@ -3,7 +3,7 @@ import path from 'path';
 import { setName } from './name';
 import { getInitialStatsWaveform } from './statsWaveform';
 import { setPlaybackPosition } from './playbackPosition';
-import { setValidFile } from './validFile';
+import { initStatus, setStatusMessage, setStatusValid, start, end } from './status';
 import { zoomShowAll } from './zoom';
 
 export function setBuffer(value = new Float32Array()) {
@@ -20,9 +20,13 @@ export function setBufferFromUrl(url = '') {
 		request.open('GET', url, true);
 		request.responseType = 'arraybuffer';
 		request.onload = function () {
-      dispatch(decodeAudioData(name, request.response, true));
+      dispatch(end('loading'));
+      dispatch(decodeAudioData(request.response, true));
 		};
-    dispatch(decodeAudioData(name, new ArrayBuffer(), false));
+    dispatch(setBuffer());
+    dispatch(setName(name));
+    dispatch(start('loading'));
+    dispatch(setStatusValid(false));
 		request.send();
   };
 }
@@ -31,37 +35,45 @@ export function setBufferFromFile(file) {
   return (dispatch) => {
     const reader = new FileReader();
 		reader.onload = function () {
-      dispatch(decodeAudioData(file.name, reader.result, true));
+      dispatch(end('loading'));
+      dispatch(decodeAudioData(reader.result, true));
     };
-    dispatch(decodeAudioData(file.name, new ArrayBuffer(), false));
+    dispatch(setBuffer());
+    dispatch(setName(file.name));
+    dispatch(start('loading'));
+    dispatch(setStatusValid(false));
     reader.readAsArrayBuffer(file);
   };
 }
 
-export function handleBuffer(buffer, name) {
+export function handleBuffer(buffer) {
   return (dispatch) => {
     dispatch(setBuffer(buffer));
     if (buffer.length) {
       dispatch(getInitialStatsWaveform(buffer));
     }
-    dispatch(setName(name));
     dispatch(setPlaybackPosition(0, 'actions/buffer'));
     dispatch(zoomShowAll());
   };
 }
 
-export function decodeAudioData(name, data, throwError) {
+export function decodeAudioData(data, throwError) {
   return (dispatch, getState) => {
-    const { audioContext } = getState();
+    const { audioContext, name } = getState();
+    dispatch(start('decoding'));
     audioContext.decodeAudioData(data, (buffer) => {
-      dispatch(handleBuffer(buffer, name));
-      dispatch(setValidFile(true, ''));
+      dispatch(end('decoding'));
+      dispatch(handleBuffer(buffer));
+      dispatch(setStatusMessage(`Decoded "${name}" successfully.`));
+      dispatch(setStatusValid(true));
     }, function () {
-      dispatch(handleBuffer([], name));
+      dispatch(end('decoding'));
+      dispatch(handleBuffer([]));
       if (throwError) {
-        dispatch(setValidFile(false, `Could not decode ${name}.`));
+        dispatch(setStatusValid(false));
+        dispatch(setStatusMessage(`Could not decode "${name}".`));
       } else {
-        dispatch(setValidFile(false, ''));
+        dispatch(initStatus());
       }
     });
   };

@@ -162,7 +162,7 @@ class AudioEditor extends Component {
                 type="mono"
               />
               <DisplayPlaybackPosition min={zoom.start} max={zoom.end} />
-              <DisplayMessage { ...waveformData.zoom } />
+              <DisplayMessage { ...waveformData.zoom } showExtended={true} />
             </DisplayContainer>
             <PlaybackPositionSlider min={zoom.start} max={zoom.end} />
             <Row>
