@@ -2,11 +2,13 @@ import AudioStats from '../../lib/AudioStats';
 import BucketStats from '../../lib/BucketStats';
 
 self.onmessage = function (e) {
-  const { token, zoomLevel, start, end, channels, bucketSize } = e.data;
+  const { token, zoomLevel, start, end, channels } = e.data;
   const startTime = Date.now();
+  let bucketSize = e.data.bucketSize || 1;
   let forceEmitTime = e.data.forceEmitTime || 0;
   let lastEmit = startTime;
   const audioLength = end - start;
+  bucketSize = Math.min(audioLength, bucketSize);
   const renderSize = Math.pow(2, 16);
   const itemsPerRender = audioLength / renderSize;
   const numberOfChannels = channels.length;
