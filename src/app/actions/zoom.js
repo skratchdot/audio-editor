@@ -1,5 +1,4 @@
 import * as types from '../constants/ActionTypes';
-import { startWorker } from './buffer';
 
 export function setZoom(start, end) {
   return (dispatch) => {
@@ -17,7 +16,7 @@ export function setZoom(start, end) {
       end: end,
       length: length
     });
-    dispatch(startWorker('zoom'));
+    //dispatch(startWorker('zoom'));
   };
 }
 

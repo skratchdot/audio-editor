@@ -156,10 +156,10 @@ class AudioEditor extends Component {
           <Col md={12}>
             <DisplayContainer>
               <WaveformAmplitude
-                key={1024}
+                zoomLevel={1}
                 start={zoom.start}
                 end={zoom.end}
-                suffix="Mono"
+                type="mono"
               />
               <DisplayPlaybackPosition min={zoom.start} max={zoom.end} />
               <DisplayMessage { ...waveformData.zoom } />
@@ -179,10 +179,10 @@ class AudioEditor extends Component {
           <Col md={12}>
             <DisplayContainer>
               <WaveformAmplitude
-                key={1024}
+                zoomLevel={1}
                 start={0}
                 end={buffer.length - 1}
-                suffix="Mono"
+                type="mono"
                 height={50}
               />
               <DisplayPlaybackPosition min={0} max={buffer.length - 1} />

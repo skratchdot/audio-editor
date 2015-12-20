@@ -1,4 +1,5 @@
 import * as types from '../constants/ActionTypes';
+import OneWorker from '../helpers/OneWorker';
 import StatsWaveformWorker from 'worker?inline!../workers/statsWaveform.js';
 const workers = {};
 
@@ -15,25 +16,6 @@ function terminateWorkers() {
   });
 }
 
-function initWorker(key, onmessage, onerror, messages) {
-  let worker;
-  terminateWorker(key);
-  worker = new StatsWaveformWorker();
-  if (typeof onmessage === 'function') {
-    worker.onmessage = onmessage;
-  }
-  if (typeof onerror === 'function') {
-    worker.onerror = onerror;
-  }
-  if (Array.isArray(messages)) {
-    messages.forEach(function (message) {
-      worker.postMessage(message);
-    });
-  } else if (typeof messages === 'object') {
-    worker.postMessage(messages);
-  }
-}
-
 export function initStatsWaveform() {
   return {
     type: types.INIT_STATS_WAVEFORM
@@ -41,49 +23,54 @@ export function initStatsWaveform() {
 }
 
 export function getInitialStatsWaveform(audio) {
-  const token = Date.now();
+  terminateWorkers();
   return (dispatch) => {
     const channels = [];
     for (let i = 0; i < audio.numberOfChannels; i++) {
       channels.push(audio.getChannelData(i));
     }
-    const postMessage = {
+    dispatch(initStatsWaveform());
+    [
+      [1, 100]
+      /*
+      , [2, 0]
+      , [3, 0]
+      , [4, 0]
+      , [5, 0]
+      */
+    ].forEach(function (data) {
+      const [ zoomLevel, forceEmitTime ] = data;
+      dispatch(startWorker(audio, channels, zoomLevel, forceEmitTime));
+    });
+  };
+}
+
+export function startWorker(audio, channels, zoomLevel, forceEmitTime) {
+  const token = Date.now();
+  return (dispatch) => {
+    terminateWorker(zoomLevel);
+    workers[zoomLevel] = new OneWorker(StatsWaveformWorker);
+    workers[zoomLevel].exec({
       token: token,
-      forceRender: false,
-      channels: channels,
+      zoomLevel: zoomLevel,
       start: 0,
-      end: audio.length
-    };
-    const onMessage = function (e) {
+      end: audio.length,
+      channels: channels,
+      bucketSize: 1024,
+      forceEmitTime: forceEmitTime
+    }, function (e, worker) {
       if (e.data.token === token) {
-        const action = Object.assign({}, e.data, {
-          type: types.UPDATE_STATS_WAVEFORM
-        });
-        dispatch(action);
-        if (e.data.isFinished) {
-          terminateWorker(e.data.key);
+        if (e.data.type === 'terminate') {
+          worker.terminate();
+        } else {
+          e.data.type = types.UPDATE_STATS_WAVEFORM;
+          dispatch(e.data);
         }
       }
-    };
-    const onError = function (key, err) {
-      /*eslint-disable */
-      console.error(err);
-      /*eslint-enable */
-      terminateWorker(key);
-    };
-    dispatch(initStatsWaveform());
-    terminateWorkers();
-    initWorker(1, onMessage, onError.bind(this, 1), Object.assign({}, postMessage, {
-      key: 1,
-      bucketSize: 1
-    }));
-    for (let i = 10; i < 11; i++) {
-      const key = Math.pow(2, i);
-      initWorker(key, onMessage, onError.bind(this, key), Object.assign({}, postMessage, {
-        key: key,
-        bucketSize: key,
-        forceRender: key === 1024 ? true : false
-      }));
-    }
+    }, function (err) {
+      /*eslint-disable*/
+      console.error('statsWaveform: onerror:', Date.now(), err);
+      /*eslint-enable*/
+    });
   };
 }

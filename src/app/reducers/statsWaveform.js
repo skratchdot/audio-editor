@@ -2,7 +2,8 @@ import * as types from '../constants/ActionTypes';
 
 /*
  * statsWaveform is an array of objects containing the following properties:
- *   - key
+ *   - dataType
+ *   - zoomLevel
  *   - start
  *   - end
  *   - channels
@@ -18,7 +19,13 @@ export default function (state = [], action) {
       newState.push(action); // new updates go in front
       for (let i = 0; i < state.length; i++) {
         const item = state[i];
-        if (item.key !== action.key) {
+        let shouldAdd = false;
+        ['zoomLevel', 'start', 'end'].forEach(function (key) {
+          if (item[key] !== action[key]) {
+            shouldAdd = true;
+          }
+        });
+        if (shouldAdd) {
           newState.push(Object.assign({}, item));
         }
       }

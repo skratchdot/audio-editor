@@ -1,112 +1,66 @@
 import AudioStats from '../../lib/AudioStats';
+import BucketStats from '../../lib/BucketStats';
 
 self.onmessage = function (e) {
-  const startRenderTime = Date.now();
-  const forceRenderTime = 100;
-  let lastRenderTime = startRenderTime;
-  const { token, key, bucketSize, channels, start, end, forceRender } = e.data;
+  const { token, zoomLevel, start, end, channels, bucketSize } = e.data;
+  const startTime = Date.now();
+  let forceEmitTime = e.data.forceEmitTime || 0;
+  let lastEmit = startTime;
+  const audioLength = end - start;
+  const renderSize = Math.pow(2, 16);
+  const itemsPerRender = audioLength / renderSize;
   const numberOfChannels = channels.length;
-  let newBufferLength = end - start;
-  let numBuckets = Math.min(bucketSize, newBufferLength);
-  numBuckets = Math.max(numBuckets, 1);
-  newBufferLength = Math.max(newBufferLength, 0);
-  const buckets = [];
-  const itemsPerBucket = newBufferLength / numBuckets;
-  let mainLoopIndex = start;
-  const mainLoopEnd = start + newBufferLength;
+  let mainStart = start;
+  const mainEnd = end;
+  const stats = {
+    mono: new BucketStats(bucketSize, audioLength, AudioStats),
+    channels: []
+  };
+  for (let channelNum = 0; channelNum < numberOfChannels; channelNum++) {
+    stats.channels.push(new BucketStats(bucketSize, audioLength, AudioStats));
+  }
   const emit = function (isFinished) {
-    if (isFinished ||
-      (forceRender && Date.now() - lastRenderTime > forceRenderTime)) {
-      let obj;
-      const result = {
-        isFinished: isFinished,
+    if (isFinished || (
+      forceEmitTime > 0 &&
+      Date.now() - lastEmit > forceEmitTime)) {
+      const message = {
         token: token,
-        key: key,
-        bucketSize: bucketSize,
+        isFinished: isFinished,
+        zoomLevel: zoomLevel,
         start: start,
         end: end,
-        statsMono: [],
-        pathsPosMaxMono: 'M 0,0',
-        pathsPosAvgMono: 'M 0,0',
-        pathsNegAvgMono: 'M 0,0',
-        pathsNegMinMono: 'M 0,0'
+        mono: [],
+        channels: []
       };
+      message.mono = stats.mono.get(true);
       for (let channelNum = 0; channelNum < numberOfChannels; channelNum++) {
-        result[`statsChannel${channelNum}`] = [];
-        result[`pathsPosMaxChannel${channelNum}`] = 'M 0,0';
-        result[`pathsPosAvgChannel${channelNum}`] = 'M 0,0';
-        result[`pathsNegAvgChannel${channelNum}`] = 'M 0,0';
-        result[`pathsNegMinChannel${channelNum}`] = 'M 0,0';
+        message.channels[channelNum] = stats.channels[channelNum].get(true);
       }
-      for (let bucketIndex = 0; bucketIndex < buckets.length; bucketIndex++) {
-        const xVal = start + Math.round(itemsPerBucket * bucketIndex);
-        obj = buckets[bucketIndex].mono.get(true);
-        result.statsMono.push(obj);
-        result.pathsPosMaxMono += ` L ${xVal},${obj.pos.max}`;
-        result.pathsPosAvgMono += ` L ${xVal},${obj.pos.mean}`;
-        result.pathsNegAvgMono += ` L ${xVal},${obj.neg.mean}`;
-        result.pathsNegMinMono += ` L ${xVal},${obj.neg.min}`;
+      message.renderTime = Date.now() - startTime;
+      self.postMessage(message);
+      lastEmit = Date.now();
+    }
+  };
+  let outerIndex = 0;
+  while (mainStart < mainEnd) {
+    for (let bucketIndex = 0; bucketIndex < renderSize; bucketIndex++) {
+      const audioIndex = Math.floor(itemsPerRender * bucketIndex) + outerIndex;
+      //const audioIndex = mainStart; // render in order
+      if (audioIndex < channels[0].length) {
+        let monoValue = 0;
         for (let channelNum = 0; channelNum < numberOfChannels; channelNum++) {
-          obj = buckets[bucketIndex].channels[channelNum].get(true);
-          result[`statsChannel${channelNum}`].push(obj);
-          result[`pathsPosMaxChannel${channelNum}`] += ` L ${xVal},${obj.pos.max}`;
-          result[`pathsPosAvgChannel${channelNum}`] += ` L ${xVal},${obj.pos.mean}`;
-          result[`pathsNegAvgChannel${channelNum}`] += ` L ${xVal},${obj.neg.mean}`;
-          result[`pathsNegMinChannel${channelNum}`] += ` L ${xVal},${obj.neg.min}`;
+          const val = channels[channelNum][audioIndex];
+          monoValue += val;
+          stats.channels[channelNum].processAt(audioIndex, val);
         }
+        stats.mono.processAt(audioIndex, monoValue / numberOfChannels);
       }
-      // close paths
-      result.pathsPosMaxMono += ` L ${mainLoopEnd},0 Z`;
-      result.pathsPosAvgMono += ` L ${mainLoopEnd},0 Z`;
-      result.pathsNegAvgMono += ` L ${mainLoopEnd},0 Z`;
-      result.pathsNegMinMono += ` L ${mainLoopEnd},0 Z`;
-      for (let channelNum = 0; channelNum < numberOfChannels; channelNum++) {
-        result[`pathsPosMaxChannel${channelNum}`] += ` L ${mainLoopEnd},0 Z`;
-        result[`pathsPosAvgChannel${channelNum}`] += ` L ${mainLoopEnd},0 Z`;
-        result[`pathsNegAvgChannel${channelNum}`] += ` L ${mainLoopEnd},0 Z`;
-        result[`pathsNegMinChannel${channelNum}`] += ` L ${mainLoopEnd},0 Z`;
-      }
-      // send result
-      result.renderTime = Date.now() - startRenderTime;
-      self.postMessage(result);
-      lastRenderTime = Date.now();
+      mainStart++;
     }
-    if (isFinished) {
-      self.close();
-    }
-  };
-  const initBucket = function (loopStart, loopEnd) {
-    const bucket = {};
-    bucket.channels = [];
-    for (let i = 0; i < numberOfChannels; i++) {
-      bucket.channels.push(new AudioStats());
-    }
-    bucket.mono = new AudioStats();
-    bucket.loopStart = loopStart;
-    bucket.loopEnd = loopEnd;
-    return bucket;
-  };
-  // create buckets
-  let loopStart = mainLoopIndex;
-  for (let i = 0; i < numBuckets; i++) {
-    const loopEnd = loopStart + itemsPerBucket;
-    buckets[i] = initBucket(Math.round(loopStart), loopEnd);
-    loopStart += itemsPerBucket;
-  }
-  while (mainLoopIndex < mainLoopEnd) {
-    for (let i = 0; i < numBuckets; i++) {
-      let monoValue = 0;
-      for (let channelNum = 0; channelNum < numberOfChannels; channelNum++) {
-        const channelValue = channels[channelNum][buckets[i].loopStart];
-        monoValue += channelValue;
-        buckets[i].channels[channelNum].process(channelValue);
-      }
-      buckets[i].mono.process(monoValue / numberOfChannels);
-      buckets[i].loopStart++;
-      mainLoopIndex++;
-    }
+    outerIndex++;
     emit(false);
   }
+  emit(true);
   emit(true);
 };
 

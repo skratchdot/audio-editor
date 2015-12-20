@@ -18,8 +18,8 @@ export default class BucketStats extends lib.BaseStats {
     return result;
   }
   processAt(index, value) {
-    const ratio = this.__index / this.__expectedSize;
-    const newIndex = Math.floor(ratio / this.__numBuckets);
+    const ratio = index / this.__expectedSize;
+    const newIndex = Math.floor(ratio * this.__numBuckets);
     const bucketIndex = newIndex % this.__numBuckets;
     this.__buckets[bucketIndex].process(value);
   }
