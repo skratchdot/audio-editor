@@ -64,7 +64,6 @@ self.onmessage = function (e) {
     emit(false);
   }
   emit(true);
-  emit(true);
 };
 
 self.onerror = function (err) {
