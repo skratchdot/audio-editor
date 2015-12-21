@@ -38,7 +38,7 @@ class WaveformAmplitude extends Component {
       let path = `M ${xMin},0`;
       for (let i = 0; i < arr.length; i++) {
         const xPos = i / arr.length;
-        path += ` L ${xPos},${getPath(arr[i], keyPath, 0)}`;
+        path += ` L ${xPos},${0 - getPath(arr[i], keyPath, 0)}`;
       }
       path += ` L ${xMax},0 Z`;
       return path;
