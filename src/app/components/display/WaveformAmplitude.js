@@ -28,8 +28,10 @@ class WaveformAmplitude extends Component {
         break;
       }
     }
-    const xMin = start / buffer.length;
-    const xMax = end / buffer.length;
+    let xMin = (start / buffer.length);
+    let xMax = (end / buffer.length);
+    xMin = Number.isFinite(xMin) ? xMin : 0;
+    xMax = Number.isFinite(xMax) ? xMax : 0;
     const xLength = xMax - xMin;
     const getSvgPath = function (obj, keyPath) {
       const arr = getPath(obj, type, []);
