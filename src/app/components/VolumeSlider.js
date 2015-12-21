@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { setVolume } from '../actions/volume';
+import Range from '../components/Range';
 
 class VolumeSlider extends Component {
-  handleVolumeChange(e) {
+  handleVolumeChange(value) {
     const { dispatch } = this.props;
-    dispatch(setVolume(e.target.value));
+    dispatch(setVolume(value));
   }
   render() {
     const { volume } = this.props;
@@ -19,13 +20,11 @@ class VolumeSlider extends Component {
             <strong>{volume.toFixed(2)}</strong>
           </Col>
           <Col md={6}>
-            <input
-              type="range"
+            <Range
               value={volume}
               step={0.01}
               min={0}
               max={1}
-              onChange={this.handleVolumeChange.bind(this)}
               onInput={this.handleVolumeChange.bind(this)}
             />
           </Col>

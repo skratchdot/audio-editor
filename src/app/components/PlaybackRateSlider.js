@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { setPlaybackRate } from '../actions/playbackRate';
+import Range from '../components/Range';
 
 class PlaybackRateSlider extends Component {
-  handlePlaybackRateChange(e) {
+  handlePlaybackRateChange(value) {
     const { dispatch } = this.props;
-    dispatch(setPlaybackRate(e.target.value));
+    dispatch(setPlaybackRate(value));
   }
   render() {
     const { playbackRate } = this.props;
@@ -19,13 +20,11 @@ class PlaybackRateSlider extends Component {
             <strong>{playbackRate.toFixed(2)}</strong>
           </Col>
           <Col md={6}>
-            <input
-              type="range"
+            <Range
               value={playbackRate}
               step={0.01}
               min={-2}
               max={2}
-              onChange={this.handlePlaybackRateChange.bind(this)}
               onInput={this.handlePlaybackRateChange.bind(this)}
             />
           </Col>
