@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Jumbotron } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import arrayGet from 'array-any-index';
 import ease from 'd3-ease';
@@ -138,18 +138,16 @@ class AudioEditor extends Component {
       <div>
         <Row>
           <Col md={6}>
-            <PlayBar />
+            <Jumbotron className="jumbo-control">
+              <PlayBar />
+              <VolumeSlider />
+            </Jumbotron>
           </Col>
           <Col md={6}>
-            <PlaybackRateBar />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <VolumeSlider />
-          </Col>
-          <Col md={6}>
-            <PlaybackRateSlider />
+            <Jumbotron className="jumbo-control">
+              <PlaybackRateBar />
+              <PlaybackRateSlider />
+            </Jumbotron>
           </Col>
         </Row>
         <Row>

@@ -25,7 +25,7 @@ class PlayBar extends Component {
 		return (
       <div>
         <Row>
-          <Col md={12}>
+          <Col md={12} className="text-center">
             <Button
               bsStyle={bsStyle}
               bsSize={bsSize}

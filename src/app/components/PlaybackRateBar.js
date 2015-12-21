@@ -17,7 +17,7 @@ class PlaybackRateBar extends Component {
 		return (
       <div>
         <Row>
-          <Col md={12}>
+          <Col md={12} className="text-center">
             {[-2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2].map(function (val, i) {
               return (
                 <Button
