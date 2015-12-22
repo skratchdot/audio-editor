@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import arrayGet from 'array-any-index';
 import ease from 'd3-ease';
 import WaveformAmplitude from './display/WaveformAmplitude';
-import DisplayAmplitudePath from './DisplayAmplitudePath';
 import DisplayContainer from './DisplayContainer';
 import DisplayMessage from './DisplayMessage';
 import DisplayPlaybackPosition from './DisplayPlaybackPosition';
+import MonoButtonGroup from './MonoButtonGroup';
 import PlayBar from './PlayBar';
 import PlaybackPositionSlider from './PlaybackPositionSlider';
 import PlaybackRateBar from './PlaybackRateBar';
@@ -134,7 +134,39 @@ class AudioEditor extends Component {
     }
   }
   render() {
-    const { buffer, playbackPosition, waveformData, zoom } = this.props;
+    const { buffer, mono, playbackPosition, waveformData, zoom } = this.props;
+    const zoomDisplay = [];
+    if (mono || buffer.length === 0) {
+      zoomDisplay.push(
+        <WaveformAmplitude
+          key="mono"
+          type="mono"
+          zoomLevel={1}
+          start={zoom.start}
+          end={zoom.end}
+        />
+      );
+    } else {
+      for (let i = 0; i < buffer.numberOfChannels; i++) {
+        if (i > 0) {
+          zoomDisplay.push(
+            <div key={`spacer${i}`} style={{
+              height: 2,
+              backgroundColor: '#aaa'
+            }}>&nbsp;</div>
+          );
+        }
+        zoomDisplay.push(
+          <WaveformAmplitude
+            key={`channels.${i}`}
+            type={`channels.${i}`}
+            zoomLevel={1}
+            start={zoom.start}
+            end={zoom.end}
+          />
+        );
+      }
+    }
 		return (
       <div>
         <Row>
@@ -154,12 +186,13 @@ class AudioEditor extends Component {
         <Row>
           <Col md={12}>
             <DisplayContainer>
-              <WaveformAmplitude
-                zoomLevel={1}
-                start={zoom.start}
-                end={zoom.end}
-                type="mono"
-              />
+              <div style={{
+                  height: 200,
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}>
+                {zoomDisplay}
+              </div>
               <DisplayPlaybackPosition min={zoom.start} max={zoom.end} />
               <DisplayMessage { ...waveformData.zoom } showExtended={true} />
             </DisplayContainer>
@@ -168,8 +201,8 @@ class AudioEditor extends Component {
               <Col md={6}>
                 <ZoomBar />
               </Col>
-              <Col md={6}>
-                <WaveformDataDebugBar { ...waveformData.zoom } />
+              <Col mdOffset={3} md={3}>
+                <MonoButtonGroup />
               </Col>
             </Row>
           </Col>
@@ -208,6 +241,7 @@ export default connect(function (state) {
   return {
     audioContext: state.audioContext,
     buffer: state.buffer,
+    mono: state.mono,
     muted: state.muted,
     playbackPosition: state.playbackPosition,
     playbackRate: state.playbackRate,

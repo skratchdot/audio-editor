@@ -3,6 +3,7 @@ import { routerStateReducer } from 'redux-router';
 import audioContext from './audioContext';
 import buffer from './buffer';
 import examples from './examples';
+import mono from './mono';
 import muted from './muted';
 import name from './name';
 import playbackPosition from './playbackPosition';
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   audioContext,
   buffer,
   examples,
+  mono,
   muted,
   name,
   playbackPosition,

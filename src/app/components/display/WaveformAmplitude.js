@@ -74,7 +74,7 @@ WaveformAmplitude.defaultProps = Object.assign({
   end: 0,
   suffix: 'Mono',
   width: '100%',
-  height: 200
+  height: null
 });
 
 export default connect(function (state) {
