@@ -13,7 +13,6 @@ import PlaybackPositionSlider from './PlaybackPositionSlider';
 import PlaybackRateBar from './PlaybackRateBar';
 import PlaybackRateSlider from './PlaybackRateSlider';
 import VolumeSlider from './VolumeSlider';
-import WaveformDataDebugBar from './WaveformDataDebugBar';
 import ZoomBar from './ZoomBar';
 import ZoomSlider from './ZoomSlider';
 import { setPlaybackPosition } from '../actions/playbackPosition';
@@ -134,7 +133,7 @@ class AudioEditor extends Component {
     }
   }
   render() {
-    const { buffer, mono, playbackPosition, waveformData, zoom } = this.props;
+    const { buffer, mono, playbackPosition, zoom } = this.props;
     const zoomDisplay = [];
     if (mono || buffer.length === 0) {
       zoomDisplay.push(
@@ -194,7 +193,7 @@ class AudioEditor extends Component {
                 {zoomDisplay}
               </div>
               <DisplayPlaybackPosition min={zoom.start} max={zoom.end} />
-              <DisplayMessage { ...waveformData.zoom } showExtended={true} />
+              <DisplayMessage showExtended={true} />
             </DisplayContainer>
             <PlaybackPositionSlider min={zoom.start} max={zoom.end} />
             <Row>
@@ -219,7 +218,7 @@ class AudioEditor extends Component {
               />
               <DisplayPlaybackPosition min={0} max={buffer.length - 1} />
               <ZoomSlider />
-              <DisplayMessage { ...waveformData.overview } />
+              <DisplayMessage />
             </DisplayContainer>
             <PlaybackPositionSlider min={0} max={buffer.length - 1} />
             <Row>
@@ -227,7 +226,6 @@ class AudioEditor extends Component {
                 <small>Position: {Math.round(playbackPosition.position)}</small>
               </Col>
               <Col md={6}>
-                <WaveformDataDebugBar { ...waveformData.overview } />
               </Col>
             </Row>
           </Col>
@@ -248,7 +246,6 @@ export default connect(function (state) {
     playbackScrubbing: state.playbackScrubbing,
     playbackType: state.playbackType,
     volume: state.volume,
-    waveformData: state.waveformData,
     zoom: state.zoom
   };
 })(AudioEditor);

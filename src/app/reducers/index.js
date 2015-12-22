@@ -13,7 +13,6 @@ import playbackType from './playbackType';
 import statsWaveform from './statsWaveform';
 import status from './status';
 import volume from './volume';
-import waveformData from './waveformData';
 import zoom from './zoom';
 
 const rootReducer = combineReducers({
@@ -31,7 +30,6 @@ const rootReducer = combineReducers({
   statsWaveform,
   status,
   volume,
-  waveformData,
   zoom
 });
 

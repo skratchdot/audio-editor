@@ -68,6 +68,6 @@ self.onmessage = function (e) {
 
 self.onerror = function (err) {
   /*eslint-disable */
-  console.log('worker error: waveformData', err);
+  console.log('worker error: statsWaveform', err);
   /*eslint-enable */
 };
