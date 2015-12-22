@@ -15,6 +15,7 @@ class Range extends Component {
     const { value, min, max } = this.props;
     const len = max - min;
     let ratio = (value - min) / len;
+    ratio = Number.isFinite(ratio) ? ratio : 0;
     ratio = Math.min(1, ratio);
     ratio = Math.max(0, ratio);
     return ratio;
