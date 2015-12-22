@@ -201,7 +201,7 @@ class AudioEditor extends Component {
               <Col md={6}>
                 <ZoomBar />
               </Col>
-              <Col mdOffset={3} md={3}>
+              <Col md={6} style={{display: 'flex', justifyContent: 'flex-end'}}>
                 <MonoButtonGroup />
               </Col>
             </Row>

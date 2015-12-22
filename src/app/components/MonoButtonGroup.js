@@ -9,13 +9,17 @@ class MuteButton extends Component {
     dispatch(setMono(value));
   }
   render() {
-    const { mono } = this.props;
+    const { buffer, mono } = this.props;
     const bsSize = 'xsmall';
 		return (
       <ButtonToolbar>
         <ButtonGroup bsSize={bsSize}>
-          <Button active={mono} onClick={this.setMono.bind(this, true)}>Mono</Button>
-          <Button active={!mono} onClick={this.setMono.bind(this, false)}>Stereo</Button>
+          <Button active={mono} onClick={this.setMono.bind(this, true)}>
+            Mono (1)
+          </Button>
+          <Button active={!mono} onClick={this.setMono.bind(this, false)}>
+            Stereo ({buffer.numberOfChannels || 1})
+          </Button>
         </ButtonGroup>
       </ButtonToolbar>
 		);
@@ -24,6 +28,7 @@ class MuteButton extends Component {
 
 export default connect(function (state) {
   return {
+    buffer: state.buffer,
     mono: state.mono
   };
 })(MuteButton);
