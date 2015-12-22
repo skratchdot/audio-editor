@@ -76,6 +76,7 @@ class AudioEditor extends Component {
   onAudioProcess(e) {
     const {
       buffer,
+      muted,
       playbackPosition,
       playbackRate,
       playbackScrubbing,
@@ -123,7 +124,7 @@ class AudioEditor extends Component {
         output[i] = output[i] / channelData.length;
       }
       // add volume
-      output[i] = output[i] * volume;
+      output[i] = output[i] * (muted ? 0 : volume);
       if (playbackScrubbing) {
         const easePosition = ease.linear(i / maxLength);
         this.audioPosition = (scrubStart + (easePosition * scrubLength));
@@ -207,6 +208,7 @@ export default connect(function (state) {
   return {
     audioContext: state.audioContext,
     buffer: state.buffer,
+    muted: state.muted,
     playbackPosition: state.playbackPosition,
     playbackRate: state.playbackRate,
     playbackScrubbing: state.playbackScrubbing,
