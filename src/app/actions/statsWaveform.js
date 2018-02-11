@@ -50,7 +50,9 @@ export function startWorker(audio, channels, zoomLevel, forceEmitTime) {
   return (dispatch) => {
     terminateWorker(zoomLevel);
     workers[zoomLevel] = new OneWorker(StatsWaveformWorker);
+    /*eslint-disable*/
     console.log('startingWorker:', token, `${Date.now() - token}ms`);
+    /*eslint-enable*/
     workers[zoomLevel].exec({
       token: token,
       zoomLevel: zoomLevel,

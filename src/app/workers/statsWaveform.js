@@ -4,7 +4,9 @@ import BucketStats from '../../lib/BucketStats';
 self.onmessage = function (e) {
   const { token, zoomLevel, start, end, channels } = e.data;
   const startTime = Date.now();
+  /*eslint-disable*/
   console.log('working:', startTime, `${startTime - token}ms`);
+  /*eslint-enable*/
   let bucketSize = e.data.bucketSize || 1;
   let forceEmitTime = e.data.forceEmitTime || 0;
   let lastEmit = startTime;
