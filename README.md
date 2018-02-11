@@ -30,9 +30,9 @@ __Coming Soon__
 ## Links
 
 - [Source Code](https://github.com/skratchdot/audio-editor)
-- [Live Example](http://projects.skratchdot.com/audio-editor)
+- [Live Example](https://projects.skratchdot.com/audio-editor)
 
 
 ## License
-Copyright (c) 2015 [skratchdot](http://skratchdot.com/)  
+Copyright (c) 2015 [skratchdot](https://www.skratchdot.com/)  
 Licensed under the [MIT license](LICENSE-MIT).

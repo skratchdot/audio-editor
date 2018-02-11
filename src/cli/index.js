@@ -16,5 +16,5 @@ console.log(`
 audio-editor coming soon!
 
 please stay up-to-date by watching:
-http://github.com/skratchdot/audio-editor
+https://github.com/skratchdot/audio-editor
 `);

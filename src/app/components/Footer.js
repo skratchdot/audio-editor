@@ -13,7 +13,7 @@ class Footer extends Component {
 				<Row className="footer">
 					<Col md={6} className="copyright">
 						&copy; Copyright {fullYear} &nbsp;
-						<a href="http://skratchdot.com/">skratchdot</a>
+						<a href="https://www.skratchdot.com/">skratchdot</a>
 					</Col>
 					<Col md={6} className="social">
 					</Col>

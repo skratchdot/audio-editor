@@ -19,7 +19,7 @@ export function setExamples(group = '', file = '') {
 
 export function loadExampleFile(group, file) {
   return (dispatch) => {
-    const urlPrefix = 'http://projects.skratchdot.com/audio-files';
+    const urlPrefix = 'https://projects.skratchdot.com/audio-files';
     const url = `${urlPrefix}${file}`;
     dispatch(setExamples(group, file));
     if (typeof file === 'string' && file.length) {
