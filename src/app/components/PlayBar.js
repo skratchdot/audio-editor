@@ -7,7 +7,11 @@ import { setPlaybackType } from '../actions/playbackType';
 class PlayBar extends Component {
   handlePlaybackTypeChange(value) {
     const { dispatch } = this.props;
-    dispatch(setPlaybackType(value));
+    dispatch((dispatch, getState) => {
+      const { audioContext } = getState();
+      audioContext.resume();
+      dispatch(setPlaybackType(value));
+    });
   }
   handlePlaybackPositionChange(value) {
     const { dispatch, buffer } = this.props;
